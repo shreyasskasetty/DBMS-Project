@@ -34,6 +34,11 @@ import {
 } from "reactstrap";
 
 class Register extends React.Component {
+
+  handleClick =(e)=>{
+    e.preventDefault();
+    console.log('clicked');
+  }
   render() {
     return (
       <>
@@ -41,12 +46,13 @@ class Register extends React.Component {
           <Card className="bg-secondary shadow border-0">
             <CardHeader className="bg-transparent pb-5">
               <div className="text-muted text-center mt-2 mb-4">
-                <small>Sign up withd</small>
+                <small>Customer Registeration </small>
               </div>
               
             </CardHeader>
             <CardBody className="px-lg-5 py-lg-5">
               <Form role="form">
+                {/*Customer Name */}
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
                     <InputGroupAddon addonType="prepend">
@@ -54,9 +60,35 @@ class Register extends React.Component {
                         <i className="ni ni-hat-3" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Name" type="text" />
+                    <Input placeholder="Customer Name" type="text" />
                   </InputGroup>
                 </FormGroup>
+
+                {/*Address*/}
+                <FormGroup>
+                  <InputGroup className="input-group-alternative mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-square-pin" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input placeholder="Address" type="text" />
+                  </InputGroup>
+                </FormGroup>
+
+                {/*Phone Number*/}
+                <FormGroup>
+                  <InputGroup className="input-group-alternativ￼b-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-mobile-button" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input placeholder="Phone Number" type="num￼"/>
+                  </InputGroup>
+                </FormGroup>
+
+               {/**Email */ }
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
                     <InputGroupAddon addonType="prepend">
@@ -67,22 +99,9 @@ class Register extends React.Component {
                     <Input placeholder="Email" type="email" />
                   </InputGroup>
                 </FormGroup>
-                <FormGroup>
-                  <InputGroup className="input-group-alternative">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="ni ni-lock-circle-open" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Password" type="password" />
-                  </InputGroup>
-                </FormGroup>
-                <div className="text-muted font-italic">
-                  <small>
-                    password strength:{" "}
-                    <span className="text-success font-weight-700">strong</span>
-                  </small>
-                </div>
+
+                
+                
                 <Row className="my-4">
                   <Col xs="12">
                     <div className="custom-control custom-control-alternative custom-checkbox">
@@ -106,7 +125,7 @@ class Register extends React.Component {
                   </Col>
                 </Row>
                 <div className="text-center">
-                  <Button className="mt-4" color="primary" type="button">
+                  <Button className="mt-4" color="primary" type="button" onClick={this.handleClick}>
                     Create account
                   </Button>
                 </div>

@@ -56,45 +56,15 @@ class Login extends React.Component {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Email" type="email" />
+                    <Input placeholder="EmployeeID" type="ID" />
                   </InputGroup>
                 </FormGroup>
                 
-                {/*Customer Name*/}
-                <FormGroup className="mb-3">
-                  <InputGroup className="input-group-alternative">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="fa fa-user-circle-o" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Customer Name" type="cname" />
-                  </InputGroup>
-                </FormGroup>
+                
 
-                {/*Customer Address*/}
-                <FormGroup>
-                  <InputGroup className="input-group-alternative">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Customer Address" type="caddress" />
-                  </InputGroup>
-                </FormGroup>
+                
 
-                {/*Customer Phone no.*/}
-                <FormGroup>
-                  <InputGroup className="input-group-alternative">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Customer Phone NO." type="pnum" />
-                  </InputGroup>
-                </FormGroup>
+                
 
                 {/*Password*/}
                 <FormGroup>
@@ -107,47 +77,19 @@ class Login extends React.Component {
                     <Input placeholder="Password" type="password" />
                   </InputGroup>
                 </FormGroup>
-                <div className="custom-control custom-control-alternative custom-checkbox">
-                  <input
-                    className="custom-control-input"
-                    id=" customCheckLogin"
-                    type="checkbox"
-                  />
-                  <label
-                    className="custom-control-label"
-                    htmlFor=" customCheckLogin"
-                  >
-                    <span className="text-muted">Remember me</span>
-                  </label>
-                </div>
+
+                {/* Sign in BUTTON */}
                 <div className="text-center">
                   <Button className="my-4" color="primary" type="button">
                     Sign in
                   </Button>
                 </div>
+
               </Form>
             </CardBody>
+
           </Card>
-          <Row className="mt-3">
-            <Col xs="6">
-              <a
-                className="text-light"
-                href="#pablo"
-                onClick={e => e.preventDefault()}
-              >
-                <small>Forgot password?</small>
-              </a>
-            </Col>
-            <Col className="text-right" xs="6">
-              <a
-                className="text-light"
-                href="#pablo"
-                onClick={e => e.preventDefault()}
-              >
-                <small>Create new account</small>
-              </a>
-            </Col>
-          </Row>
+         
         </Col>
       </>
     );

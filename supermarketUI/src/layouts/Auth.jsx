@@ -82,8 +82,7 @@ class Auth extends React.Component {
               
             </div>
           </div>
-
-
+          
           {/* Page content */}
           <Container className="mt--8 pb-5">
             <Row className="justify-content-center">
@@ -91,7 +90,6 @@ class Auth extends React.Component {
             </Row>
           </Container>
         </div>
-        <AuthFooter />
       </>
     );
   }
