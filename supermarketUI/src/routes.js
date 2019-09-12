@@ -19,6 +19,7 @@ import Index from "views/Index.jsx";
 import Profile from "views/examples/Profile.jsx";
 import Maps from "views/examples/Maps.jsx";
 import Register from "views/examples/Register.jsx";
+import AdminLogin from "views/examples/AdminLogin.jsx";
 import Login from "views/examples/Login.jsx";
 import Tables from "views/examples/Tables.jsx";
 import Icons from "views/examples/Icons.jsx";
@@ -61,16 +62,23 @@ var routes = [
   },
   {
     path: "/login",
-    name: "Login",
+    name: "Employee Login",
     icon: "ni ni-key-25 text-info",
     component: Login,
     layout: "/auth"
   },
   {
     path: "/register",
-    name: "Register",
+    name: "New Registration",
     icon: "ni ni-circle-08 text-pink",
     component: Register,
+    layout: "/auth"
+  },
+  {
+    path: "/adminlogin",
+    name: "Admin Login",
+    icon: "ni ni-circle-08 text-pink",
+    component: AdminLogin,
     layout: "/auth"
   }
 ];
