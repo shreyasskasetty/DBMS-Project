@@ -37,7 +37,22 @@ class Register extends React.Component {
 
   handleClick =(e)=>{
     e.preventDefault();
-    console.log('clicked');
+    console.log("Email: " + this.state.email);
+    console.log("Address: "+this.state.address);
+    console.log("Phone Number: "+this.state.phoneno);
+    console.log("Customer Name: "+this.state.custname)
+  }
+  handleEmailChange=(e)=>{
+    this.setState({email: e.target.value});
+ }
+  handleAddressChange=(e)=>{
+    this.setState({address: e.target.value})
+  }
+  handlePhoneNumberChange=(e)=>{
+    this.setState({phoneno:e.target.value})
+  }
+  handleCustomerName =(e)=>{
+    this.setState({custname:e.target.value})
   }
   render() {
     return (
@@ -51,7 +66,7 @@ class Register extends React.Component {
               
             </CardHeader>
             <CardBody className="px-lg-5 py-lg-5">
-              <Form role="form">
+              <Form role="form" method="POST" action="/submit-custform">
                 {/*Customer Name */}
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
@@ -60,7 +75,7 @@ class Register extends React.Component {
                         <i className="ni ni-hat-3" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Customer Name" type="text" />
+                    <Input placeholder="Name" name="custname" type="text" onChange={this.handleCustomerName} />
                   </InputGroup>
                 </FormGroup>
 
@@ -72,7 +87,7 @@ class Register extends React.Component {
                         <i className="ni ni-square-pin" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Address" type="text" />
+                    <Input placeholder="Address" type="text" name = "address" onChange={this.handleAddressChange} />
                   </InputGroup>
                 </FormGroup>
 
@@ -84,7 +99,7 @@ class Register extends React.Component {
                         <i className="ni ni-mobile-button" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Phone Number" type="num￼"/>
+                    <Input placeholder="PhoneNumber" type="num￼" onChange={this.handlePhoneNumberChange}/>
                   </InputGroup>
                 </FormGroup>
 
@@ -96,7 +111,7 @@ class Register extends React.Component {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Email" type="email" />
+                    <Input placeholder="Email" type="email" onChange={this.handleEmailChange} />
                   </InputGroup>
                 </FormGroup>
 
@@ -125,7 +140,7 @@ class Register extends React.Component {
                   </Col>
                 </Row>
                 <div className="text-center">
-                  <Button className="mt-4" color="primary" type="button" onClick={this.handleClick}>
+                  <Button className="mt-4" color="primary" type="submit">
                     Create account
                   </Button>
                 </div>
