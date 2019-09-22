@@ -57,7 +57,56 @@ class Register extends React.Component {
   render() {
     return (
       <>
-        <Col lg="6" md="8">
+        {/*Iot Tag registration form tag*/ }
+
+        <Col lg="5" md="7">
+          <Card className="bg-secondary shadow border-0">
+            <CardHeader className="bg-transparent pb-5">
+              <div className="text-muted text-center mt-2 mb-4">
+                <small>IOT Tag Register</small>
+              </div>
+              
+            </CardHeader>
+            <CardBody className="px-lg-5 py-lg-5">
+              <Form role="form" method="POST" action="/submit-custform">
+                {/*Phone Number*/}
+                <FormGroup>
+                  <InputGroup className="input-group-alternative mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-mobile-button" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input placeholder="Phone Number" name="cphone" type="number" onChange={this.handleCustomerName} />
+                  </InputGroup>
+                </FormGroup>
+
+                {/*TagID*/}
+                <FormGroup>
+                  <InputGroup className="input-group-alternative mb-3">
+                    <InputGroupAddon addonType="prepend">
+                      <InputGroupText>
+                        <i className="ni ni-cart" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                    <Input placeholder="Tag ID" type="text" name = "tagID" onChange={this.handleAddressChange} />
+                  </InputGroup>
+                </FormGroup>                
+                <div className="text-center">
+                  <Button className="mt-4" color="primary" type="submit">
+                    Tag
+                  </Button>
+                </div>
+              </Form>
+            </CardBody>
+          </Card>
+        </Col>
+        
+        <Col lg ="1" md = "1">
+        </Col>
+
+        {/*customer register form */ }
+        <Col lg="5" md="7">
           <Card className="bg-secondary shadow border-0">
             <CardHeader className="bg-transparent pb-5">
               <div className="text-muted text-center mt-2 mb-4">
