@@ -149,11 +149,34 @@ function Server (compiler, options = {}, _log) {
   const app = this.app = new express();
   app.use(express.urlencoded())
   app.post('/submit-custform',(req,resp)=>{
-     const custname = req.body.custname
-     const path = 'http://localhost:3000/admin/user-profile'
-     console.log('Customer name: '+custname)
-     resp.writeHead('302',{'location':path})
-     resp.end()
+    const name = req.body.custname
+    const address = req.body.address
+    const emailid = req.body.email
+    const phoneno = req.body.pnumber
+    const sqlquery = "insert into customer(name,phoneno,emailid,address,empid) values (\'"+name+"\',"+phoneno+",\'"+emailid+"\',\'"+address+"\',1);";
+    try {
+      connection.query(sqlquery,function(error,rows,fields){
+        if(!!error){
+          console.log('Error in the query');
+          const path = 'http://localhost:3000/auth/register'
+          resp.writeHead('302',{'location':path})
+          resp.send(JSON.stringify('Query Successful'));
+
+          resp.end()
+        } else{
+          console.log('Successful query');
+       const path = 'http://localhost:3001/admin/user-profile'
+       resp.writeHead('302',{'location':path})
+       resp.end()
+        }
+      });
+    } catch (error) {
+      console.log('Error in the query');
+          const path = 'http://localhost:3000/auth/register'
+          resp.writeHead('302',{'location':path})
+          resp.send(JSON.stringify('helloworld'));
+          resp.end()
+    }
   })
   /*mysql connection */
   const mysql = require('mysql');
@@ -175,6 +198,9 @@ function Server (compiler, options = {}, _log) {
       if(!!error){
         console.log('Error in the query');
       } else{
+        console.log(req);
+        console.log(resp);
+
         console.log('Successful query');
         resp.json(rows)
       }
@@ -760,11 +786,11 @@ Server.prototype.checkHost = function (headers, headerToCheck) {
   // disallow
   return false;
 };
-
+let portnumber;
 // delegate listen call and init sockjs
 Server.prototype.listen = function (port, hostname, fn) {
   this.hostname = hostname;
-
+  portnumber = port;
   const returnValue = this.listeningApp.listen(port, hostname, (err) => {
     const socket = sockjs.createServer({
       // Use provided up-to-date sockjs-client
