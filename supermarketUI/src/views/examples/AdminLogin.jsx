@@ -16,7 +16,7 @@
 
 */
 import React from "react";
-
+import { Link } from "react-router-dom";
 // reactstrap components
 import {
   Button,
@@ -29,6 +29,8 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
+  NavItem,
+  NavLink,
   Row,
   Col
 } from "reactstrap";
@@ -79,9 +81,18 @@ class AdminLogin extends React.Component {
                 </div>
                 
                 <div className="text-center">
-                  <Button className="mt-4" color="primary" type="button">
+                  
+                  <NavItem>
+                  <NavLink
+                    className="nav-link-icon"
+                    to="/admin/index"
+                    tag={Link}
+                  >
+                    <Button className="mt-4" color="primary" type="button"> 
                     Sign In
                   </Button>
+                  </NavLink>
+                </NavItem>
                 </div>
               </Form>
             </CardBody>
