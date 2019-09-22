@@ -23,7 +23,7 @@ import AdminLogin from "views/examples/AdminLogin.jsx";
 import Login from "views/examples/Login.jsx";
 import Tables from "views/examples/Tables.jsx";
 import Icons from "views/examples/Icons.jsx";
-
+import Intermediate from "views/examples/Intermediate.jsx";
 var routes = [
   {
     path: "/index",
@@ -69,7 +69,7 @@ var routes = [
   },
   {
     path: "/register",
-    name: "New Registration",
+    name: "Registration",
     icon: "ni ni-circle-08 text-pink",
     component: Register,
     layout: "/auth"
@@ -79,6 +79,13 @@ var routes = [
     name: "Admin Login",
     icon: "ni ni-circle-08 text-pink",
     component: AdminLogin,
+    layout: "/auth"
+  },
+  {
+    path: "/submit-custform",
+    name: "Intermediate",
+    icon: "ni ni-circle-08 text-pink",
+    component: Intermediate,
     layout: "/auth"
   }
 ];
