@@ -34,14 +34,30 @@ import {
 } from "reactstrap";
 
 class Register extends React.Component {
-
   handleClick =(e)=>{
     e.preventDefault();
-    console.log("Email: " + this.state.email);
-    console.log("Address: "+this.state.address);
-    console.log("Phone Number: "+this.state.phoneno);
-    console.log("Customer Name: "+this.state.custname)
+    // let result =fetch('/submit-custform').then(
+    //   response => {
+    //     if(response.ok)
+    //     {
+    //       console.log(response.json())
+    //     return response.json()
+    //     }
+    //     else{
+    //       return null;
+    //     }
+    //   }
+    // )
+    // if(result!=null)
+    // {
+    //   console.log(result);
+    //   alert(result);
+    // }
+    // else if(result == null){
+    //   alert("Registration Unsuccessful");
+    // }
   }
+  
   handleEmailChange=(e)=>{
     this.setState({email: e.target.value});
  }
@@ -99,7 +115,7 @@ class Register extends React.Component {
                         <i className="ni ni-mobile-button" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="PhoneNumber" type="num￼" onChange={this.handlePhoneNumberChange}/>
+                    <Input placeholder="PhoneNumber" type="num￼ber" name ="pnumber" onChange={this.handlePhoneNumberChange}/>
                   </InputGroup>
                 </FormGroup>
 
@@ -111,7 +127,7 @@ class Register extends React.Component {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Email" type="email" onChange={this.handleEmailChange} />
+                    <Input placeholder="Email" type="email" name = "email" onChange={this.handleEmailChange} />
                   </InputGroup>
                 </FormGroup>
 
