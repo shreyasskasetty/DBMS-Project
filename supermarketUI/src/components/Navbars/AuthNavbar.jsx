@@ -75,7 +75,7 @@ class AdminNavbar extends React.Component {
                     tag={Link}
                   >
                     <i className="ni ni-circle-08" />
-                    <span className="nav-link-inner--text">New Registration</span>
+                    <span className="nav-link-inner--text">Registration</span>
                   </NavLink>
                 </NavItem>
 

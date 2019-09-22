@@ -68,7 +68,7 @@ class Register extends React.Component {
               
             </CardHeader>
             <CardBody className="px-lg-5 py-lg-5">
-              <Form role="form" method="POST" action="/submit-custform">
+              <Form role="form">
                 {/*Phone Number*/}
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
@@ -115,7 +115,7 @@ class Register extends React.Component {
               
             </CardHeader>
             <CardBody className="px-lg-5 py-lg-5">
-              <Form role="form" method="POST" action="/submit-custform">
+              <Form role="form" action="/submit-custform" method="POST">
                 {/*Customer Name */}
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
