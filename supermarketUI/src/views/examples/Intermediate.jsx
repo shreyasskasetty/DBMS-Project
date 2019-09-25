@@ -25,20 +25,23 @@ import {
 } from "reactstrap";
 
 class Intermediate extends React.Component {
-     
-  handleClick =(e)=>{
-    e.preventDefault();
-    console.log("Email: " + this.state.email);
-    console.log("Address: "+this.state.address);
-    console.log("Phone Number: "+this.state.phoneno);
-    console.log("Customer Name: "+this.state.custname)
+  state = {
+    customers:[]
   }
-
+  componentDidMount(){  
+  fetch('http://localhost:3000/users').
+  then(response => response.json())
+  .then(data =>{
+    this.setState ({
+      customers : data
+    })
+    console.log(data)}
+  ).catch(error => this.setState({ error, isLoading: false }));
+}
   render() {
      setTimeout(() =>{
          this.props.history.push('/auth/register')
-     },3000)
-     const content = 'Processing ...';
+     },2000)
     return (
       <>
         {/*Iot Tag registration form tag*/ }
@@ -47,15 +50,15 @@ class Intermediate extends React.Component {
           <Card className="bg-secondary shadow border-0">
             <CardHeader className="bg-transparent pb-5">
               <div className="text-muted text-center mt-2 mb-4">
-                {content}
+              {this.state.customers.map(member =>
+                        <tr key={member.cid}>
+                        <td>{member.name} </td>
+                        </tr>
+                    )}
               </div>
-              
             </CardHeader>
             
           </Card>
-        </Col>
-        
-        <Col lg ="1" md = "1">
         </Col>
       </>
     );

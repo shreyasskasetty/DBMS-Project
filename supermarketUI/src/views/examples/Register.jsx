@@ -34,42 +34,59 @@ import {
 } from "reactstrap";
 
 class Register extends React.Component {
-  handleClick =(e)=>{
-    e.preventDefault();
-    // let result =fetch('/submit-custform').then(
-    //   response => {
-    //     if(response.ok)
-    //     {
-    //       console.log(response.json())
-    //     return response.json()
-    //     }
-    //     else{
-    //       return null;
-    //     }
-    //   }
-    // )
-    // if(result!=null)
-    // {
-    //   console.log(result);
-    //   alert(result);
-    // }
-    // else if(result == null){
-    //   alert("Registration Unsuccessful");
-    // }
-  }
+  constructor(props) {
+    super(props)
+    this.state = {
+        msg: '',
+        name : '',
+         address : '',
+        emailid : '',
+         phoneno : 0
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.logChange = this.logChange.bind(this);
+}
+logChange(e) {
+  e.preventDefault();
+  this.setState({[e.target.name]: e.target.value});  
+}
+  handleSubmit(event){
+    event.preventDefault();
+    const data = {
+      name : event.target.name.value
+      ,emailid : event.target.emailid.value
+      ,phoneno : event.target.phoneno.value
+      ,address :event.target.address.value
+
+      ,mssg : this.state.msg
+    }
+    console.log(data)
+    fetch("/signup", {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'},
+      body: JSON.stringify(data) 
+  }).then(function(response) {
+      if (response.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+      return response.json();
+  }).then(function(data) {
+    
+    document.getElementById('customer-form').reset();
+      alert('successully registered')
+     
+      
+      if(data === "success"){
+         this.setState({msg: "Thanks for registering"});
+         alert(this.state.msg) 
+      }
+  }).catch(function(err) {
+      console.log(err)
+  });
+  }    
   
-  handleEmailChange=(e)=>{
-    this.setState({email: e.target.value});
- }
-  handleAddressChange=(e)=>{
-    this.setState({address: e.target.value})
-  }
-  handlePhoneNumberChange=(e)=>{
-    this.setState({phoneno:e.target.value})
-  }
-  handleCustomerName =(e)=>{
-    this.setState({custname:e.target.value})
-  }
+  
   render() {
     return (
       <>
@@ -93,7 +110,7 @@ class Register extends React.Component {
                         <i className="ni ni-mobile-button" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Phone Number" name="cphone" type="number" onChange={this.handleCustomerName} />
+                    <Input placeholder="Phone Number" name="phoneno" type="number" />
                   </InputGroup>
                 </FormGroup>
 
@@ -105,7 +122,7 @@ class Register extends React.Component {
                         <i className="ni ni-cart" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Tag ID" type="text" name = "tagID" onChange={this.handleAddressChange} />
+                    <Input placeholder="Tag ID" type="text" name = "tagID"  />
                   </InputGroup>
                 </FormGroup>                
                 <div className="text-center">
@@ -121,7 +138,7 @@ class Register extends React.Component {
         <Col lg ="1" md = "1">
         </Col>
 
-        {/*customer register form */ }
+        
         <Col lg="5" md="7">
           <Card className="bg-secondary shadow border-0">
             <CardHeader className="bg-transparent pb-5">
@@ -131,7 +148,9 @@ class Register extends React.Component {
               
             </CardHeader>
             <CardBody className="px-lg-5 py-lg-5">
-              <Form role="form" action="/submit-custform" method="POST">
+
+              {/*-----customer register form */ }
+              <Form role="form" id="customer-form" action="/signup" onSubmit={event => this.handleSubmit(event)} method="POST">
                 {/*Customer Name */}
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
@@ -140,7 +159,7 @@ class Register extends React.Component {
                         <i className="ni ni-hat-3" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Name" name="custname" type="text" onChange={this.handleCustomerName} />
+                    <Input placeholder="Name" name="name" type="text" onChange={this.logChange} />
                   </InputGroup>
                 </FormGroup>
 
@@ -152,7 +171,7 @@ class Register extends React.Component {
                         <i className="ni ni-square-pin" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Address" type="text" name = "address" onChange={this.handleAddressChange} />
+                    <Input placeholder="Address" type="text" name = "address" onChange={this.logChange} />
                   </InputGroup>
                 </FormGroup>
 
@@ -164,7 +183,7 @@ class Register extends React.Component {
                         <i className="ni ni-mobile-button" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="PhoneNumber" type="num￼ber" name ="pnumber" onChange={this.handlePhoneNumberChange}/>
+                    <Input placeholder="PhoneNumber" type="num￼ber" name ="phoneno" onChange={this.logChange}/>
                   </InputGroup>
                 </FormGroup>
 
@@ -176,7 +195,7 @@ class Register extends React.Component {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Email" type="email" name = "email" onChange={this.handleEmailChange} />
+                    <Input placeholder="Email" type="email" name = "emailid" onChange={this.logChange} />
                   </InputGroup>
                 </FormGroup>
 
