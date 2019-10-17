@@ -150,7 +150,7 @@ logChange(e) {
             <CardBody className="px-lg-5 py-lg-5">
 
               {/*-----customer register form */ }
-              <Form role="form" id="customer-form" action="/signup" onSubmit={event => this.handleSubmit(event)} method="POST">
+              <Form role="form" id="customer-form"  onSubmit={event => this.handleSubmit(event)} method="POST">
                 {/*Customer Name */}
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">

@@ -22,11 +22,19 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import "assets/vendor/nucleo/css/nucleo.css";
 import "assets/vendor/@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/scss/argon-dashboard-react.scss";
-
+import { createStore } from 'redux';
 import AdminLayout from "layouts/Admin.jsx";
 import AuthLayout from "layouts/Auth.jsx";
+import { Provider } from 'react-redux';
+import rootReducer from 'reducers/rootReducer.js';
 
+const store = createStore(rootReducer);
+store.subscribe(() => {
+  console.log('state updated');
+  console.log(store.getState());
+})
 ReactDOM.render(
+  <Provider store={store}>,
   <BrowserRouter>
     <Switch>
       <Route path="/auth" render={props => <AuthLayout {...props} />} />
@@ -34,6 +42,7 @@ ReactDOM.render(
       
       <Redirect from="/" to="/auth/login" />
     </Switch>
-  </BrowserRouter>,
+  </BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );

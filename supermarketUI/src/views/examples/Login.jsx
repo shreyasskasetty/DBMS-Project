@@ -16,6 +16,7 @@
 
 */
 import React from "react";
+import {connect} from 'react-redux';
 
 // reactstrap components
 import {
@@ -33,7 +34,54 @@ import {
 } from "reactstrap";
 
 class Login extends React.Component {
+//   constructor(props) {
+//     super(props)
+//     console.log('Object props')
+//     console.log(props);
+//     this.handleSubmit = this.handleSubmit.bind(this)
+
+// }
+constructor(props) {
+  super(props);
+  console.log(props)
+}
+  
+  handleSubmit(event){
+    event.preventDefault();
+    const tempProp = this.props;
+    const data = {
+      empid :  event.target.empid.value, 
+      password : event.target.password.value, 
+      mssg : ''
+    }
+    fetch("/emplogin", {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'},
+      body: JSON.stringify(data) 
+  }).then(function(response) {
+      if (response.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+      return response.json();
+  }).then(function(dat) {
+    console.log(data);
+    console.log('again')
+    console.log(tempProp)
+      if(dat.success)
+      {
+      tempProp.updateEmpId(data.empid)
+      window.location.assign("/auth/register");
+      }
+      else
+       alert('Wrong Password')
+     // redirect to other page
+  }).catch(function(err) {
+      console.log(err)
+  });
+  }    
   render() {
+    console.log(this.props);
     return (
       <> 
         <Col lg="5" md="7">
@@ -47,7 +95,7 @@ class Login extends React.Component {
            
             <CardBody className="px-lg-5 py-lg-5">
               {/*Email ID*/}
-              <Form role="form">
+              <Form role="form" onSubmit={event => this.handleSubmit(event)} method="POST">
                 <FormGroup className="mb-3">
                   <InputGroup className="input-group-alternative">
                     <InputGroupAddon addonType="prepend">
@@ -55,15 +103,9 @@ class Login extends React.Component {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="EmployeeID" type="ID" />
+                    <Input placeholder="EmployeeID" name = "empid"type="ID" />
                   </InputGroup>
                 </FormGroup>
-                
-                
-
-                
-
-                
 
                 {/*Password*/}
                 <FormGroup>
@@ -73,13 +115,13 @@ class Login extends React.Component {
                         <i className="ni ni-lock-circle-open" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Password" type="password" />
+                    <Input placeholder="Password" name = "password" type="password" />
                   </InputGroup>
                 </FormGroup>
 
                 {/* Sign in BUTTON */}
                 <div className="text-center">
-                  <Button className="my-4" color="primary" type="button">
+                  <Button className="my-4" color="primary" type="submit">
                     Sign in
                   </Button>
                 </div>
@@ -95,4 +137,21 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    empId : state.empId,
+    adminId : state.adminId
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateEmpId : (id) =>{
+      console.log('id is' + id)
+      dispatch({
+        type : 'updateEmpID',
+        empid : id
+      })
+    }
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

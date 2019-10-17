@@ -35,7 +35,6 @@ class Auth extends React.Component {
   getRoutes = routes => {
     return routes.map((prop, key) => {
       if (prop.layout === "/auth") {
-        console.log(prop);
         return (
           <Route
             path={prop.layout + prop.path}
@@ -58,7 +57,6 @@ class Auth extends React.Component {
               <div className="header-body text-center mb-7">
                 <Row className="justify-content-center">
                   <Col lg="5" md="6">
-                    <h1 className="text-white">Welcome!</h1>
                   </Col>
                 </Row>
               </div>
