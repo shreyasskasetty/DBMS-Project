@@ -16,6 +16,7 @@
 
 */
 import React from "react";
+import {connect} from 'react-redux';
 
 // reactstrap components
 import {
@@ -43,13 +44,19 @@ class Register extends React.Component {
         emailid : '',
          phoneno : 0
     }
+    console.log(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.logChange = this.logChange.bind(this);
+    this.handleClick = this.handleClick.bind(this)
 }
 logChange(e) {
   e.preventDefault();
   this.setState({[e.target.name]: e.target.value});  
 }
+  handleClick(event){
+    console.log('Clicked');
+    this.props.updateEmpId()
+  }
   handleSubmit(event){
     event.preventDefault();
     const data = {
@@ -231,10 +238,34 @@ logChange(e) {
               </Form>
             </CardBody>
           </Card>
+          
         </Col>
+        <div className="text-center">
+                  <Button className="mt-4" color="primary" onClick = {this.handleClick}>
+                    Log Out
+                  </Button>
+                </div>
       </>
     );
   }
 }
 
-export default Register;
+const mapStateToProps=(state)=>{
+  console.log(state)
+  return {
+    empId : state.empId,
+    adminId : state.adminId
+  }
+}
+const mapDispatchToProps= (dispatch)=>{
+  return {
+    updateEmpId : () =>{
+      dispatch({
+        type : 'updateEmpID',
+        eLogin : false,
+        empid : -1
+      })
+    }
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Register);

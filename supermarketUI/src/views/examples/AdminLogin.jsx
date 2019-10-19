@@ -16,7 +16,8 @@
 
 */
 import React from "react";
-import { Link } from "react-router-dom";
+import {connect} from 'react-redux';
+
 // reactstrap components
 import {
   Button,
@@ -29,12 +30,56 @@ import {
   InputGroupAddon,
   InputGroupText,
   InputGroup,
-  NavItem,
-  NavLink,
   Col
 } from "reactstrap";
 
 class AdminLogin extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(props)
+  } 
+    
+    handleSubmit(event){
+      event.preventDefault();
+      console.log('Sign In')
+      console.log("ELogin: "+this.props.eLogin+" ALogin: "+this.props.aLogin)
+      if (!(this.props.eLogin ^ this.props.aLogin))
+      {
+      const tempProp = this.props;
+      console.log(event.target.adminid.value);
+      const data = {
+        adminid :  event.target.adminid.value, 
+        password : event.target.password.value, 
+        mssg : ''
+      }
+      fetch("/adlogin", {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'},
+        body: JSON.stringify(data) 
+    }).then(function(response) {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+    }).then(function(dat) {
+     
+        if(dat.success)
+        {
+        tempProp.updateEmpId(data.adminid)
+        window.location.assign("/admin/user-profile");
+        }
+        else
+         alert('Wrong Password')
+       // redirect to other page
+    }).catch(function(err) {
+        console.log(err)
+    });
+    }
+    else alert('eMPLOYEE Should Logout');
+  
+    }
+
   render() {
     return (
       <>
@@ -48,7 +93,7 @@ class AdminLogin extends React.Component {
             </CardHeader>
             <CardBody className="px-lg-5 py-lg-5">
              
-              <Form role="form">
+              <Form role="form" onSubmit={event => this.handleSubmit(event)} method="POST">
 
                 <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
@@ -57,7 +102,7 @@ class AdminLogin extends React.Component {
                         <i className="ni ni-hat-3" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="LoginID" type="text" />
+                    <Input placeholder="LoginID" type="text" name= "adminid"/>
                   </InputGroup>
                 </FormGroup>
               
@@ -68,7 +113,7 @@ class AdminLogin extends React.Component {
                         <i className="ni ni-lock-circle-open" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Password" type="password" />
+                    <Input placeholder="Password" type="password" name = "password"/>
                   </InputGroup>
                 </FormGroup>
                 
@@ -81,17 +126,12 @@ class AdminLogin extends React.Component {
                 
                 <div className="text-center">
                   
-                  <NavItem>
-                  <NavLink
-                    className="nav-link-icon"
-                    to="/admin/index"
-                    tag={Link}
-                  >
-                    <Button className="mt-4" color="primary" type="button"> 
-                    Sign In
+                  {/* Sign in BUTTON */}
+                <div className="text-center">
+                  <Button className="my-4" color="primary" type="submit">
+                    Sign in
                   </Button>
-                  </NavLink>
-                </NavItem>
+                </div>
                 </div>
               </Form>
             </CardBody>
@@ -101,5 +141,21 @@ class AdminLogin extends React.Component {
     );
   }
 }
-
-export default AdminLogin;
+const mapStateToProps = (state) =>{
+  return {
+    eLogin : state.eLogin,
+    aLogin : state.aLogin
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateEmpId : (id) =>{
+      dispatch({
+        type : 'updateAdminID',
+        adminid : id,
+        aLogin : true
+      })
+    }
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(AdminLogin);

@@ -34,20 +34,16 @@ import {
 } from "reactstrap";
 
 class Login extends React.Component {
-//   constructor(props) {
-//     super(props)
-//     console.log('Object props')
-//     console.log(props);
-//     this.handleSubmit = this.handleSubmit.bind(this)
 
-// }
 constructor(props) {
   super(props);
   console.log(props)
-}
+} 
   
   handleSubmit(event){
     event.preventDefault();
+    if (!(this.props.eLogin ^ this.props.aLogin))
+    {
     const tempProp = this.props;
     const data = {
       empid :  event.target.empid.value, 
@@ -65,9 +61,7 @@ constructor(props) {
       }
       return response.json();
   }).then(function(dat) {
-    console.log(data);
-    console.log('again')
-    console.log(tempProp)
+   
       if(dat.success)
       {
       tempProp.updateEmpId(data.empid)
@@ -79,9 +73,11 @@ constructor(props) {
   }).catch(function(err) {
       console.log(err)
   });
-  }    
+  }
+  else alert('Admin Should Logout');
+
+    }
   render() {
-    console.log(this.props);
     return (
       <> 
         <Col lg="5" md="7">
@@ -137,19 +133,19 @@ constructor(props) {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state) =>{
   return {
-    empId : state.empId,
-    adminId : state.adminId
+    eLogin : state.eLogin,
+    aLogin : state.aLogin
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
     updateEmpId : (id) =>{
-      console.log('id is' + id)
       dispatch({
         type : 'updateEmpID',
-        empid : id
+        empid : id,
+        eLogin : true
       })
     }
   }

@@ -1,23 +1,21 @@
-const initState = {
-    empID: null,
-    adminID: null
-}
-const initAction = {
-    empId : 565
-}
-const rootReducer = (state=initState, action)=>{
-    console.log(action)
-    if (action.type == 'updateEmpID')
+const rootReducer = (state, action)=>{
+    console.log(state)
+    if (action.type === 'updateEmpID')
     {
     console.log('updating state')
         return {
-            empID : action.empid,
+            empID : parseInt( action.empid) ,
+            eLogin : action.eLogin,
+            aLogin : false,
             adminID : null
         }
     }
-    return {
-        ...state,
-        empID : initAction.empId
-    };
+   
+    return ({
+        empID : -1,
+        adminID : -1,
+        eLogin : false ,
+        aLogin : false
+    })
 }
 export default rootReducer;

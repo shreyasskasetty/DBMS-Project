@@ -20,7 +20,6 @@ import { Link } from "react-router-dom";
 // reactstrap components
 import {
   UncontrolledCollapse,
-  NavbarBrand,
   Navbar,
   NavItem,
   NavLink,
@@ -29,19 +28,7 @@ import {
   Row,
   Col
 } from "reactstrap";
-
 class AdminNavbar extends React.Component {
-  state = {
-    name : null
-  }
-  setstate =()=>{
-    this.setState({
-      name : this.props.name
-    })
-  }
-  componentDidMount(){
-    this.setstate()
-  }
 
   disp= () =>{
     return (
@@ -120,70 +107,12 @@ class AdminNavbar extends React.Component {
       </>
     )
   } 
-  secDisp= ()=>{
-    return (
-    <>
-        <Navbar
-          className="navbar-top navbar-horizontal navbar-dark"
-          expand="md"
-        >
-          <Container className="px-4">
-            <NavItem>
-            <img alt="..." src={require("assets/img/brand/argon-react-white.png")} />
-
-            </NavItem>
-            <button className="navbar-toggler" id="navbar-collapse-main">
-              <span className="navbar-toggler-icon" />
-            </button>
-            <UncontrolledCollapse navbar toggler="#navbar-collapse-main">
-              <div className="navbar-collapse-header d-md-none">
-                <Row>
-                  <Col className="collapse-brand" xs="6">
-                    <Link to="/">
-                      <img
-                        alt="..."
-                        src={require("assets/img/brand/argon-react.png")}
-                      />
-                    </Link>
-                  </Col>
-                  <Col className="collapse-close" xs="6">
-                    <button
-                      className="navbar-toggler"
-                      id="navbar-collapse-main"
-                    >
-                      <span />
-                      <span />
-                    </button>
-                  </Col>
-                </Row>
-              </div>
-              <Nav className="ml-auto" navbar>
-
-                <NavItem>
-                  <NavLink
-                    className="nav-link-icon"
-                    to="/auth/login"
-                    tag={Link}
-                  >
-                    <i className="ni ni-key-25" />
-                    <span className="nav-link-inner--text">Logout</span>
-                  </NavLink>
-                </NavItem>
-
-
-              </Nav>
-            </UncontrolledCollapse>
-          </Container>
-        </Navbar>
-      </>
-    )}
   render() {
-    let stateName = this.state.name;
     return (
-      
-      stateName === "Registration" ?  this.secDisp(): this.disp()
+        this.disp()
     );
   }
 }
+
 
 export default AdminNavbar;
