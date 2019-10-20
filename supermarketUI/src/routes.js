@@ -23,70 +23,79 @@ import AdminLogin from "views/examples/AdminLogin.jsx";
 import Login from "views/examples/Login.jsx";
 import Tables from "views/examples/Tables.jsx";
 import Icons from "views/examples/Icons.jsx";
-import Intermediate from "views/examples/Intermediate.jsx";
+import EmpRegister from "./views/examples/EmpRegister";
 var routes = [
   {
     path: "/index",
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
-    layout: "/admin"
+    layout: "/admin",
+    flag: 1
   },
   {
     path: "/icons",
     name: "Icons",
     icon: "ni ni-planet text-blue",
     component: Icons,
-    layout: "/admin"
+    layout: "/admin",
+    flag: 1
   },
   {
     path: "/maps",
     name: "Maps",
     icon: "ni ni-pin-3 text-orange",
     component: Maps,
-    layout: "/admin"
+    layout: "/admin",
+    flag: 1
   },
   {
     path: "/user-profile",
     name: "User Profile",
     icon: "ni ni-single-02 text-yellow",
     component: Profile,
-    layout: "/admin"
+    layout: "/admin",
+    flag: 1
   },
   {
     path: "/tables",
     name: "Tables",
     icon: "ni ni-bullet-list-67 text-red",
     component: Tables,
-    layout: "/admin"
+    layout: "/admin",
+    flag: 1
   },
   {
     path: "/Login",
     name: "Employee Login",
     icon: "ni ni-key-25 text-info",
     component: Login,
-    layout: "/auth"
+    layout: "/auth",
+    flag: 0
   },
   {
     path: "/register",
     name: "Registration",
     icon: "ni ni-circle-08 text-pink",
     component: Register,
-    layout: "/auth"
+    layout: "/auth",
+    flag: 0
+  },
+  {
+    path: "/EmpRegister",
+    name: "Employee Registeration",
+    icon: "ni ni-circle-08 text-pink",
+    component: EmpRegister,
+    layout: "/auth",
+    flag: 1
   },
   {
     path: "/adminlogin",
     name: "Admin Login",
     icon: "ni ni-circle-08 text-pink",
     component: AdminLogin,
-    layout: "/auth"
-  },
-  {
-    path: "/submit-custform",
-    name: "Intermediate",
-    icon: "ni ni-circle-08 text-pink",
-    component: Intermediate,
-    layout: "/auth"
+    layout: "/auth",
+    flag: 0
   }
 ];
 export default routes;

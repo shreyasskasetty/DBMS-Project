@@ -17,6 +17,7 @@
 */
 import React from "react";
 import { Link } from "react-router-dom";
+import {connect} from "react-redux";
 // reactstrap components
 import {
   UncontrolledCollapse,
@@ -30,6 +31,63 @@ import {
 } from "reactstrap";
 class AdminNavbar extends React.Component {
 
+  constructor(props){
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
+  empLogin = ()=>{
+    return(
+                   <NavLink
+                    className="nav-link-icon"
+                    to="/auth/login"
+                    tag={Link}
+                  >
+                    <i className="ni ni-key-25" />
+                    <span className="nav-link-inner--text">Employee Login</span>
+                  </NavLink>
+    )
+  }
+  register = ()=>{
+    return(
+      <NavLink
+                    className="nav-link-icon"
+                    to="/auth/register"
+                    tag={Link}
+                  >
+                    <i className="ni ni-key-25" />
+                    <span className="nav-link-inner--text">Register</span>
+                  </NavLink>
+     
+    )
+  }
+  handleClick(event){
+    console.log('Clicked');
+    this.props.updateEmpId()
+  }
+  adminLogin = ()=>{
+    return(
+      <NavLink
+      className="nav-link-icon"
+      to="/auth/adminlogin"
+      tag={Link}
+    >
+      <i className="ni ni-key-25" />
+      <span className="nav-link-inner--text">Admin Login</span>
+    </NavLink>
+    )
+  }
+  logout = ()=>{
+    return(
+      <NavLink
+      className="nav-link-icon"
+      to="/auth/login"
+      tag={Link}
+    >
+      <i className="ni ni-key-25" />
+      <span className="nav-link-inner--text">Logout</span>
+    </NavLink>
+    )
+  }
   disp= () =>{
     return (
       <>
@@ -68,37 +126,12 @@ class AdminNavbar extends React.Component {
               </div>
               <Nav className="ml-auto" navbar>
 
-                <NavItem>
-                  <NavLink
-                    className="nav-link-icon"
-                    to="/auth/login"
-                    tag={Link}
-                  >
-                    <i className="ni ni-key-25" />
-                    <span className="nav-link-inner--text">Employee Login</span>
-                  </NavLink>
-                </NavItem>
-
-                <NavItem>
-                  <NavLink
-                    className="nav-link-icon"
-                    to="/auth/adminlogin"
-                    tag={Link}
-                  >
-                    <i className="ni ni-key-25" />
-                    <span className="nav-link-inner--text">Admin Login</span>
-                  </NavLink>
-                </NavItem>
-
-                <NavItem>
-                  <NavLink
-                    className="nav-link-icon"
-                    to="/admin/user-profile"
-                    tag={Link}
-                  >
-                    <i className="ni ni-single-02" />
-                    <span className="nav-link-inner--text">Profile</span>
-                  </NavLink>
+                <NavItem >
+                  {this.props.eLogin?this.register():this.empLogin()}
+                </NavItem >
+                    
+                <NavItem onClick={this.handleClick}>
+                  {this.props.eLogin?this.logout():this.adminLogin()}
                 </NavItem>
               </Nav>
             </UncontrolledCollapse>
@@ -114,5 +147,21 @@ class AdminNavbar extends React.Component {
   }
 }
 
-
-export default AdminNavbar;
+const mapStateToProps = (state) =>{
+  return {
+    eLogin : state.eLogin,
+    aLogin : state.aLogin
+  }
+}
+const mapDispatchToProps= (dispatch)=>{
+  return {
+    updateEmpId : () =>{
+     dispatch({
+       type : 'updateEmpID',
+       eLogin : false,
+       empid : -1
+     })
+   }
+ }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(AdminNavbar);

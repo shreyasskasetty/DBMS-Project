@@ -37,10 +37,20 @@ class Login extends React.Component {
 
 constructor(props) {
   super(props);
-  console.log(props)
+  this.state ={
+    empid: ""
+  }
+  this.onChange = this.onChange.bind(this);
 } 
-  
+handleClick(event){
+  console.log('Clicked');
+  this.props.updateEmpId()
+}
+  onChange(e){
+    this.setState({[e.target.name]:e.target.value})
+  }
   handleSubmit(event){
+    console.log(this.state)
     event.preventDefault();
     if (!(this.props.eLogin ^ this.props.aLogin))
     {
@@ -99,7 +109,7 @@ constructor(props) {
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="EmployeeID" name = "empid"type="ID" />
+                    <Input value={this.state.empid} onChange = {this.onChange} placeholder="EmployeeID" name = "empid"type="ID" />
                   </InputGroup>
                 </FormGroup>
 
@@ -142,6 +152,7 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) => {
   return {
     updateEmpId : (id) =>{
+      console.log(id)
       dispatch({
         type : 'updateEmpID',
         empid : id,

@@ -34,10 +34,9 @@ import {
   Col
 } from "reactstrap";
 
-class Register extends React.Component {
+class EmpRegister extends React.Component {
   constructor(props) {
     super(props)
-    console.log(props.eLogin)
     this.state = {
         msg: '',
         name : '',
@@ -45,6 +44,7 @@ class Register extends React.Component {
         emailid : '',
          phoneno : 0
     }
+    console.log(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.logChange = this.logChange.bind(this);
     this.handleClick = this.handleClick.bind(this)
@@ -56,7 +56,6 @@ logChange(e) {
   handleClick(event){
     console.log('Clicked');
     this.props.updateEmpId()
-    window.location.assign('/auth/login')
   }
   handleSubmit(event){
     event.preventDefault();
@@ -68,6 +67,7 @@ logChange(e) {
 
       ,mssg : this.state.msg
     }
+    console.log(data)
     fetch("/signup", {
       method: 'POST',
       headers: {
@@ -98,59 +98,11 @@ logChange(e) {
     return (
       <>
         {/*Iot Tag registration form tag*/ }
-
         <Col lg="5" md="7">
           <Card className="bg-secondary shadow border-0">
             <CardHeader className="bg-transparent pb-5">
               <div className="text-muted text-center mt-2 mb-4">
-                <small>IOT Tag Register</small>
-              </div>
-              
-            </CardHeader>
-            <CardBody className="px-lg-5 py-lg-5">
-              <Form role="form">
-                {/*Phone Number*/}
-                <FormGroup>
-                  <InputGroup className="input-group-alternative mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="ni ni-mobile-button" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Phone Number" name="phoneno" type="number" />
-                  </InputGroup>
-                </FormGroup>
-
-                {/*TagID*/}
-                <FormGroup>
-                  <InputGroup className="input-group-alternative mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="ni ni-cart" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Tag ID" type="text" name = "tagID"  />
-                  </InputGroup>
-                </FormGroup>                
-                <div className="text-center">
-                  <Button className="mt-4" color="primary" type="submit">
-                    Tag
-                  </Button>
-                </div>
-              </Form>
-            </CardBody>
-          </Card>
-        </Col>
-        
-        <Col lg ="1" md = "1">
-        </Col>
-
-        
-        <Col lg="5" md="7">
-          <Card className="bg-secondary shadow border-0">
-            <CardHeader className="bg-transparent pb-5">
-              <div className="text-muted text-center mt-2 mb-4">
-                <small>Customer Registeration </small>
+                <small>Employee Registeration </small>
               </div>
               
             </CardHeader>
@@ -240,32 +192,8 @@ logChange(e) {
           </Card>
           
         </Col>
-        <div className="text-center">
-                  <Button className="mt-4" color="primary" onClick = {this.handleClick}>
-                    Log Out
-                  </Button>
-                </div>
       </>
     );
   }
 }
-
-const mapStateToProps=(state)=>{
-  console.log(state.empId)
-  return {
-    empId : state.empId,
-    adminId : state.adminId
-  }
-}
- const mapDispatchToProps= (dispatch)=>{
-   return {
-     updateEmpId : () =>{
-      dispatch({
-        type : 'updateEmpID',
-        eLogin : false,
-        empid : -1
-      })
-    }
-  }
-}
-export default connect(mapStateToProps,mapDispatchToProps)(Register);
+export default connect()(EmpRegister);

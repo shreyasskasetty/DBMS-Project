@@ -20,6 +20,7 @@ import React from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
+import {connect} from "react-redux"
 
 // reactstrap components
 import {
@@ -60,7 +61,14 @@ class Sidebar extends React.Component {
   };
   constructor(props) {
     super(props);
+    
     this.activeRoute.bind(this);
+    this.handleClick.bind(this);
+  }
+
+  handleClick=()=>{
+    console.log('Clicked');
+    this.props.updateAdminId()
   }
   // verifies if routeName is the one active (in browser input)
   activeRoute(routeName) {
@@ -79,9 +87,14 @@ class Sidebar extends React.Component {
     });
   };
   // creates the links that appear in the left menu / Sidebar
-  createLinks = routes => {
-    return routes.map((prop, key) => {
+  
+  createLinks = (routes) => {
+    return (routes.filter(function (prop) {
+      return prop.flag===1;
+    })).map((prop, key) => {
+      console.log(prop.name)
       return (
+        
         <NavItem key={key}>
           <NavLink
             to={prop.layout + prop.path}
@@ -94,7 +107,8 @@ class Sidebar extends React.Component {
           </NavLink>
         </NavItem>
       );
-    });
+      
+    })
   };
   render() {
     const { bgColor, routes, logo } = this.props;
@@ -238,7 +252,19 @@ class Sidebar extends React.Component {
               </InputGroup>
             </Form>
             {/* Navigation */}
-            <Nav navbar>{this.createLinks(routes)}</Nav>
+            <Nav navbar>{this.createLinks(routes)}
+            <NavItem >
+          <NavLink
+            to="/auth/adminlogin"
+            tag={NavLinkRRD}
+            onClick={this.handleClick}
+            activeClassName="active"
+          >
+            <i className="ni ni-circle-08 text-pink" />
+            Logout
+          </NavLink>
+        </NavItem>
+            </Nav>
             {/* Divider */}
             <hr className="my-3" />
             {/* Heading */}
@@ -291,5 +317,22 @@ Sidebar.propTypes = {
     imgAlt: PropTypes.string.isRequired
   })
 };
-
-export default Sidebar;
+const mapStateToProps = (state) =>{
+  return {
+    eLogin : state.eLogin,
+    aLogin : state.aLogin
+  }
+}
+const mapDispatchToProps= (dispatch)=>{
+  
+  return {
+    updateAdminId : () =>{
+     dispatch({
+       type : 'updateAdminID',
+       aLogin : false,
+       adminid : -1
+     })
+   }
+ }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Sidebar);

@@ -34,8 +34,18 @@ import {
   Container,
   Media
 } from "reactstrap";
-
+import {connect} from 'react-redux'
+import AdminLogin from "../../views/examples/AdminLogin";
 class AdminNavbar extends React.Component {
+  constructor(props){
+    super(props)
+    this.handleClick =this.handleClick.bind(this)
+    
+  }
+  handleClick(event){
+    console.log('Clicked');
+    this.props.updateAdminId()
+  }
   render() {
     return (
       <>
@@ -97,7 +107,7 @@ class AdminNavbar extends React.Component {
                     <span>Support</span>
                   </DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                  <DropdownItem href="#pablo" onClick={this.handleClick}>
                     <i className="ni ni-user-run" />
                     <span>Logout</span>
                   </DropdownItem>
@@ -110,5 +120,22 @@ class AdminNavbar extends React.Component {
     );
   }
 }
-
-export default AdminNavbar;
+const mapStateToProps = (state) =>{
+  return {
+    eLogin : state.eLogin,
+    aLogin : state.aLogin
+  }
+}
+const mapDispatchToProps= (dispatch)=>{
+  
+  return {
+    updateAdminId : () =>{
+     dispatch({
+       type : 'updateAdminID',
+       aLogin : false,
+       adminid : -1
+     })
+   }
+ }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(AdminNavbar);
