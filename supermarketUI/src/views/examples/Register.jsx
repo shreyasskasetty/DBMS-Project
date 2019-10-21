@@ -47,17 +47,11 @@ class Register extends React.Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.logChange = this.logChange.bind(this);
-    this.handleClick = this.handleClick.bind(this)
 }
 logChange(e) {
   e.preventDefault();
   this.setState({[e.target.name]: e.target.value});  
 }
-  handleClick(event){
-    console.log('Clicked');
-    this.props.updateEmpId()
-    window.location.assign('/auth/login')
-  }
   handleSubmit(event){
     event.preventDefault();
     const data = {
@@ -240,11 +234,7 @@ logChange(e) {
           </Card>
           
         </Col>
-        <div className="text-center">
-                  <Button className="mt-4" color="primary" onClick = {this.handleClick}>
-                    Log Out
-                  </Button>
-                </div>
+        
       </>
     );
   }

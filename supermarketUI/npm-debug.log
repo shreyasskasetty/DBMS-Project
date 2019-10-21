@@ -7,7 +7,7 @@
 6 silly lifecycle argon-dashboard-react@1.0.0~prestart: no script for prestart, continuing
 7 info lifecycle argon-dashboard-react@1.0.0~start: argon-dashboard-react@1.0.0
 8 verbose lifecycle argon-dashboard-react@1.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle argon-dashboard-react@1.0.0~start: PATH: /usr/share/npm/bin/node-gyp-bin:/home/shreyas/Documents/DBMS Project GIT/DBMS-Project/supermarketUI/node_modules/.bin:/home/shreyas/.local/bin:/home/shreyas/bin:/home/shreyas/anaconda3/bin:/home/shreyas/anaconda3/condabin:/home/shreyas/.local/bin:/home/shreyas/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+9 verbose lifecycle argon-dashboard-react@1.0.0~start: PATH: /usr/share/npm/bin/node-gyp-bin:/home/shreyas/Documents/DBMS Project GIT/DBMS-Project/supermarketUI/node_modules/.bin:/home/shreyas/anaconda3/bin:/home/shreyas/anaconda3/condabin:/home/shreyas/.local/bin:/home/shreyas/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 10 verbose lifecycle argon-dashboard-react@1.0.0~start: CWD: /home/shreyas/Documents/DBMS Project GIT/DBMS-Project/supermarketUI
 11 silly lifecycle argon-dashboard-react@1.0.0~start: Args: [ '-c', 'react-scripts start' ]
 12 silly lifecycle argon-dashboard-react@1.0.0~start: Returned: code: 1  signal: null

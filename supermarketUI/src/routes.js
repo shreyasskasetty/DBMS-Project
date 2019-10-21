@@ -24,6 +24,9 @@ import Login from "views/examples/Login.jsx";
 import Tables from "views/examples/Tables.jsx";
 import Icons from "views/examples/Icons.jsx";
 import EmpRegister from "./views/examples/EmpRegister";
+import Billing from "./views/examples/Billing";
+import Inventory from "./views/examples/Inventory";
+
 var routes = [
   {
     path: "/index",
@@ -86,7 +89,7 @@ var routes = [
     name: "Employee Registeration",
     icon: "ni ni-circle-08 text-pink",
     component: EmpRegister,
-    layout: "/auth",
+    layout: "/admin",
     flag: 1
   },
   {
@@ -94,6 +97,22 @@ var routes = [
     name: "Admin Login",
     icon: "ni ni-circle-08 text-pink",
     component: AdminLogin,
+    layout: "/auth",
+    flag: 0
+  },
+  {
+    path: "/billing",
+    name: "Billing",
+    icon: "ni ni-basket text-pink",
+    component: Billing,
+    layout: "/auth",
+    flag: 0
+  },
+  {
+    path: "/inventory",
+    name: "Inventory",
+    icon: "ni ni-archive-2 text-pink",
+    component: Inventory,
     layout: "/auth",
     flag: 0
   }

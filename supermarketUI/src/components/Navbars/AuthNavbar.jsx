@@ -47,6 +47,19 @@ class AdminNavbar extends React.Component {
                   </NavLink>
     )
   }
+  inventory=()=>{
+    return(
+      <NavLink
+                    className="nav-link-icon"
+                    to="/auth/inventory"
+                    tag={Link}
+                  >
+                    <i className="ni ni-archive-2" />
+                    <span className="nav-link-inner--text">Inventory</span>
+                  </NavLink>
+     
+    )
+  }
   register = ()=>{
     return(
       <NavLink
@@ -88,6 +101,20 @@ class AdminNavbar extends React.Component {
     </NavLink>
     )
   }
+
+  billing = ()=>{
+    return(
+      <NavLink
+      className="nav-link-icon"
+      to="/auth/billing"
+      tag={Link}
+    >
+      <i className="ni ni-basket" />
+      <span className="nav-link-inner--text">Billing</span>
+    </NavLink>
+    )
+  }
+
   disp= () =>{
     return (
       <>
@@ -97,7 +124,8 @@ class AdminNavbar extends React.Component {
         >
           <Container className="px-4">
             <NavItem>
-            <img alt="..." src={require("assets/img/brand/argon-react-white.png")} />              
+            <img height="50" width="150"
+            alt="..." src={require("assets/img/brand/argon-react-white.png")} />              
             </NavItem>
             <button className="navbar-toggler" id="navbar-collapse-main">
               <span className="navbar-toggler-icon" />
@@ -107,7 +135,7 @@ class AdminNavbar extends React.Component {
                 <Row>
                   <Col className="collapse-brand" xs="6">
                     <Link to="/">
-                      <img
+                      <img height="42" width="42"
                         alt="..."
                         src={require("assets/img/brand/argon-react.png")}
                       />
@@ -126,6 +154,12 @@ class AdminNavbar extends React.Component {
               </div>
               <Nav className="ml-auto" navbar>
 
+              <NavItem >
+                  {this.props.eLogin?this.billing():null}
+                </NavItem >
+                <NavItem >
+                  {this.props.eLogin?this.inventory():null}
+                </NavItem >
                 <NavItem >
                   {this.props.eLogin?this.register():this.empLogin()}
                 </NavItem >
