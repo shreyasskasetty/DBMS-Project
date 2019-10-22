@@ -16,19 +16,19 @@
 
 */
 import React from "react";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 // reactstrap components
 import {
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Form,
-  FormGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Input,
-  InputGroup,
+  // DropdownMenu,
+  // DropdownItem,
+  // UncontrolledDropdown,
+  // DropdownToggle,
+  // Form,
+  // FormGroup,
+  // InputGroupAddon,
+  // InputGroupText,
+  // Input,
+  // InputGroup,
   Navbar,
   Nav,
   Container,
@@ -50,13 +50,15 @@ class AdminNavbar extends React.Component {
       <>
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
           <Container fluid>
-            <Link
-              className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
-              to="/"
-            >
-              {this.props.brandText}
-            </Link>
-            <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+            
+              
+              <Media className="ml-2 d-none d-lg-block">
+                      <span className="mb-0 text-sm font-weight-bold text-white">
+                      {this.props.brandText}
+                      </span>
+                    </Media>
+            
+            {/* <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
               <FormGroup className="mb-0">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -67,9 +69,9 @@ class AdminNavbar extends React.Component {
                   <Input placeholder="Search" type="text" />
                 </InputGroup>
               </FormGroup>
-            </Form>
+            </Form> */}
             <Nav className="align-items-center d-none d-md-flex" navbar>
-              <UncontrolledDropdown nav>
+              {/* <UncontrolledDropdown nav>
                 <DropdownToggle className="pr-0" nav>
                   <Media className="align-items-center">
                     
@@ -106,7 +108,7 @@ class AdminNavbar extends React.Component {
                     <span>Logout</span>
                   </DropdownItem>
                 </DropdownMenu>
-              </UncontrolledDropdown>
+              </UncontrolledDropdown> */}
             </Nav>
           </Container>
         </Navbar>

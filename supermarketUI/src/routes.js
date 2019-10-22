@@ -28,38 +28,38 @@ import Billing from "./views/examples/Billing";
 import Inventory from "./views/examples/Inventory";
 
 var routes = [
-  {
-    path: "/index",
-    name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
-    component: Index,
-    layout: "/admin",
-    flag: 1
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: Icons,
-    layout: "/admin",
-    flag: 1
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: Maps,
-    layout: "/admin",
-    flag: 1
-  },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: Profile,
-    layout: "/admin",
-    flag: 1
-  },
+  // {
+  //   path: "/index",
+  //   name: "Dashboard",
+  //   icon: "ni ni-tv-2 text-primary",
+  //   component: Index,
+  //   layout: "/admin",
+  //   flag: 1
+  // },
+  // {
+  //   path: "/icons",
+  //   name: "Icons",
+  //   icon: "ni ni-planet text-blue",
+  //   component: Icons,
+  //   layout: "/admin",
+  //   flag: 1
+  // },
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   icon: "ni ni-pin-3 text-orange",
+  //   component: Maps,
+  //   layout: "/admin",
+  //   flag: 1
+  // },
+  // {
+  //   path: "/user-profile",
+  //   name: "User Profile",
+  //   icon: "ni ni-single-02 text-yellow",
+  //   component: Profile,
+  //   layout: "/admin",
+  //   flag: 1
+  // },
   {
     path: "/tables",
     name: "Tables",

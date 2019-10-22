@@ -29,7 +29,7 @@ class Header extends React.Component {
             <div className="header-body">
               {/* Card stats */}
               <Row>
-                <Col lg="6" xl="3">
+                {/* <Col lg="6" xl="3">
                   <Card className="card-stats mb-4 mb-xl-0">
                     <CardBody>
                       <Row>
@@ -58,8 +58,9 @@ class Header extends React.Component {
                       </p>
                     </CardBody>
                   </Card>
-                </Col>
-                <Col lg="6" xl="3">
+                </Col> */}
+
+                {/* <Col lg="6" xl="3">
                   <Card className="card-stats mb-4 mb-xl-0">
                     <CardBody>
                       <Row>
@@ -88,8 +89,9 @@ class Header extends React.Component {
                       </p>
                     </CardBody>
                   </Card>
-                </Col>
-                <Col lg="6" xl="3">
+                </Col> */}
+
+                {/* <Col lg="6" xl="3">
                   <Card className="card-stats mb-4 mb-xl-0">
                     <CardBody>
                       <Row>
@@ -116,8 +118,9 @@ class Header extends React.Component {
                       </p>
                     </CardBody>
                   </Card>
-                </Col>
-                <Col lg="6" xl="3">
+                </Col> */}
+
+                {/* <Col lg="6" xl="3">
                   <Card className="card-stats mb-4 mb-xl-0">
                     <CardBody>
                       <Row>
@@ -146,7 +149,7 @@ class Header extends React.Component {
                       </p>
                     </CardBody>
                   </Card>
-                </Col>
+                </Col> */}
               </Row>
             </div>
           </Container>

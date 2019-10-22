@@ -53,13 +53,14 @@ logChange(e) {
   this.setState({[e.target.name]: e.target.value});  
 }
   handleSubmit(event){
+    console.log(this.props)
     event.preventDefault();
     const data = {
       name : event.target.name.value
       ,emailid : event.target.emailid.value
       ,phoneno : event.target.phoneno.value
       ,address :event.target.address.value
-
+      ,empid:this.props.empId
       ,mssg : this.state.msg
     }
     fetch("/signup", {

@@ -16,7 +16,7 @@
 
 */
 import React from "react";
-
+import {connect} from "react-redux";
 // reactstrap components
 import {
   Button,
@@ -36,11 +36,54 @@ import UserHeader from "components/Headers/UserHeader.jsx";
 class EmpRegister extends React.Component {
   constructor(props){
     super(props);
+    this.state = {
+      adminName: null,
+      employee : null
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
+  componentDidMount(){
+    console.log(this.props)
+    const setP=(name)=>{
+      this.setState ({
+        ...this.state,
+        adminName : name
+      })
+    }
+
+    const data = {adminId :this.props.adminId}
+
+    fetch("/adminName", {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'},
+      body: JSON.stringify(data) 
+      })
+      .then(function(response) {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      })
+      .then(function(data){         
+      if(data.status === "success"){
+        setP(data.name[0].name)
+      }
+      }).catch(function(err) {
+      console.log(err)
+      });
+  }
+
     handleSubmit(event){
-      console.log("clicked")
+
       event.preventDefault();
+      const setE = (emp)=>{
+        this.setState({
+          ...this.state,
+          employee : emp
+        })
+      }
       const data = {
         name : event.target.name.value
         ,password : event.target.password.value
@@ -64,8 +107,8 @@ class EmpRegister extends React.Component {
         })
         .then(function(data){         
         if(data.status === "success"){
-          var eid = data.data[0].em
-          alert("Your Employee ID is " + eid)
+          setE(data.data[0])
+          document.getElementById("regForm").reset()
         }
         }).catch(function(err) {
         console.log(err)
@@ -74,94 +117,45 @@ class EmpRegister extends React.Component {
   render() {
     return (
       <>
-        <UserHeader />
+        <UserHeader adminName={this.state.adminName}/>
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
             <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
               <Card className="card-profile shadow">
-                <Row className="justify-content-center">
-                  <Col className="order-lg-2" lg="3">
-                    <div className="card-profile-image">
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
-                        <img
-                          alt="..."
-                          className="rounded-circle"
-                          src={require("assets/img/theme/team-4-800x800.jpg")}
-                        />
-                      </a>
-                    </div>
-                  </Col>
-                </Row>
-                <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                  <div className="d-flex justify-content-between">
-                    <Button
-                      className="mr-4"
-                      color="info"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                      size="sm"
-                    >
-                      Connect
-                    </Button>
-                    <Button
-                      className="float-right"
-                      color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                      size="sm"
-                    >
-                      Message
-                    </Button>
-                  </div>
-                </CardHeader>
+                
+                {this.state.employee !== null ? 
                 <CardBody className="pt-0 pt-md-4">
-                  <Row>
-                    <div className="col">
-                      <div className="card-profile-stats d-flex justify-content-center mt-md-5">
-                        <div>
-                          <span className="heading">22</span>
-                          <span className="description">Friends</span>
-                        </div>
-                        <div>
-                          <span className="heading">10</span>
-                          <span className="description">Photos</span>
-                        </div>
-                        <div>
-                          <span className="heading">89</span>
-                          <span className="description">Comments</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Row>
+                  
                   <div className="text-center">
                     <h3>
-                      Jessica Jones
-                      <span className="font-weight-light">, 27</span>
+                      {this.state.employee ? this.state.employee.name : null}
+                      <span className="font-weight-light"></span>
                     </h3>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
+                      {this.state.employee ? this.state.employee.address : null}
+                     
                     </div>
                     <div className="h5 mt-4">
                       <i className="ni business_briefcase-24 mr-2" />
-                      Solution Manager - Creative Tim Officer
+                      Employee Id - 
+                      {this.state.employee ? this.state.employee.empid : null}
                     </div>
-                    <div>
-                      <i className="ni education_hat mr-2" />
-                      University of Computer Science
+                    <div className="h5 mt-4">
+                      <i className="ni business_briefcase-24 mr-2" />
+                      Account-No - 
+                      {this.state.employee ? this.state.employee.accno : null}                      
                     </div>
-                    <hr className="my-4" />
-                    <p>
-                      Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                      Nick Murphy — writes, performs and records all of his own
-                      music.
-                    </p>
-                    <a href="#pablo" onClick={e => e.preventDefault()}>
-                      Show more
-                    </a>
+                    <div className="h5 mt-4">
+                      <i className="ni business_briefcase-24 mr-2" />
+                      Phone-No - 
+                      {this.state.employee ? this.state.employee.phoneno : null}                      
+                    </div>
+                    
                   </div>
-                </CardBody>
+                </CardBody>: null}
+                
               </Card>
             </Col>
             <Col className="order-xl-1" xl="8">
@@ -174,7 +168,7 @@ class EmpRegister extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <Form onSubmit={this.handleSubmit} method="post">
+                  <Form onSubmit={this.handleSubmit} method="post" id="regForm">
                     <h6 className="heading-small text-muted mb-4">
                      Employee information
                     </h6>
@@ -299,5 +293,10 @@ class EmpRegister extends React.Component {
    
   }
 }
-
-export default EmpRegister;
+const mapStateToProp=(state)=>{
+  console.log(state)
+  return {
+    adminId : state.adminid
+  }
+}
+export default connect(mapStateToProp)(EmpRegister);

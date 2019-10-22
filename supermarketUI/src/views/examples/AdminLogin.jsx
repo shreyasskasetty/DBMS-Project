@@ -52,6 +52,7 @@ class AdminLogin extends React.Component {
         password : event.target.password.value, 
         mssg : ''
       }
+      
       fetch("/adlogin", {
         method: 'POST',
         headers: {
@@ -67,7 +68,7 @@ class AdminLogin extends React.Component {
         if(dat.success)
         {
         tempProp.updateEmpId(data.adminid)
-        window.location.assign("/admin/user-profile");
+        window.location.assign("/admin/EmpRegister");
         }
         else
          alert('Wrong Password')

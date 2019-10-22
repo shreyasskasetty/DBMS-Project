@@ -27,18 +27,11 @@ import {
   CardHeader,
   CardFooter,
   Button,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
   Media,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
   Progress,
   Table,
   Container,
   Row,
-  UncontrolledTooltip,
   Form
 } from "reactstrap";
 // core components
@@ -50,8 +43,9 @@ class Tables extends React.Component {
     this.state={
       products:[]
     }
-  }
+    this.handleSubmit = this.handleSubmit.bind(this)
 
+  }
   handleSubmit(event){
     event.preventDefault();
 
@@ -61,10 +55,11 @@ class Tables extends React.Component {
       stock : event.target.stock.value
     }
     const setP = (data) =>{
-      this.setState ({
+      this.setState({
         products : data
-      })}
-    console.log(data)
+      })
+    }
+
 
     fetch("/updatePro", {
       method: 'POST',
@@ -106,7 +101,6 @@ class Tables extends React.Component {
         }
         return response.json();
       }).then(function(data) {
-        console.log(data);
         setP(data)
       }).catch(function(err) {
         console.log(err)
@@ -118,7 +112,6 @@ class Tables extends React.Component {
   disp=(pro)=>{ 
     return pro.map((data,key)=>{
       data.quantity = 0;
-      console.log(data);
       return (
         <tr key = {key}>
                       <th scope="row">
@@ -143,7 +136,7 @@ class Tables extends React.Component {
                           <span className="mr-2">{data.stock}</span>
                           <div>
                             <Progress
-                              max="100"
+                              max="1000"
                               value={data.stock}
                               barClassName="bg-danger"
                             />
@@ -242,7 +235,7 @@ class Tables extends React.Component {
                           </FormGroup>
                         </Col>
                       </Row>
-                      <Button color="primary" name = "confirm" type="submit" className="center">
+                      <Button color="primary" name = "confirm" type="submit" className=" text-center">
                       UPDATE
                       </Button>
                       </Form>
