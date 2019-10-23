@@ -34,7 +34,7 @@ var routes = [
     icon: "ni ni-tv-2 text-primary",
     component: Index,
     layout: "/admin",
-    flag: 0
+    flag: 1
   },
   {
     path: "/icons",
@@ -42,7 +42,7 @@ var routes = [
     icon: "ni ni-planet text-blue",
     component: Icons,
     layout: "/admin",
-    flag: 0
+    flag: 1
   },
   {
     path: "/maps",
@@ -50,7 +50,7 @@ var routes = [
     icon: "ni ni-pin-3 text-orange",
     component: Maps,
     layout: "/admin",
-    flag: 0
+    flag: 1
   },
   {
     path: "/user-profile",
@@ -58,7 +58,7 @@ var routes = [
     icon: "ni ni-single-02 text-yellow",
     component: Profile,
     layout: "/admin",
-    flag: 0
+    flag: 1
   },
   {
     path: "/tables",

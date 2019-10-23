@@ -42,14 +42,20 @@ import {
 // core components
 import Header from "components/Headers/Header.jsx";
 
+
+
 class Tables extends React.Component {
   constructor(props) {
     super(props)  
     this.state={
-      products:[]
+      products:[],
+      selectValue:secA
     }
     this.handleSubmit = this.handleSubmit.bind(this)
 
+  }
+  handleChange(e){
+    this.setState({selectValue:e.target.value});
   }
   handleSubmit(event){
     event.preventDefault();
@@ -357,10 +363,10 @@ class Tables extends React.Component {
                           </FormGroup>
                         </Col>
                        
-                        <UncontrolledDropdown nav>
-              <DropdownToggle nav className="nav-link-icon">
+            <UncontrolledDropdown nav>
+              <DropdownToggle nav className="">
                
-                <Col lg="3">
+                <Col >
                           <FormGroup>
                             <label
                               className="form-control-label"
@@ -387,23 +393,52 @@ class Tables extends React.Component {
               </DropdownMenu>
             </UncontrolledDropdown>
                         
-
-            <Dropdown>
-    <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-      Custom toggle
-    </Dropdown.Toggle>
-
-    <Dropdown.Menu as={CustomMenu}>
-      <Dropdown.Item eventKey="1">Red</Dropdown.Item>
-      <Dropdown.Item eventKey="2">Blue</Dropdown.Item>
-      <Dropdown.Item eventKey="3" active>
-        Orange
-      </Dropdown.Item>
-      <Dropdown.Item eventKey="1">Red-Orange</Dropdown.Item>
-    </Dropdown.Menu>
-  </Dropdown>
-
-                       
+            <UncontrolledDropdown nav>
+                <DropdownToggle className="pr-0" nav>
+                  <Media className="align-items-center">
+                    
+                    <Media className="ml-2 d-none d-lg-block">
+                      <span className="mb-0 text-sm font-weight-bold">
+                        Jessica Jones
+                      </span>
+                    </Media>
+                  </Media>
+                </DropdownToggle>
+                <DropdownMenu className="dropdown-menu-arrow" right>
+                  <DropdownItem className="noti-title" header tag="div">
+                    <h6 className="text-overflow m-0">Welcome!</h6>
+                  </DropdownItem>
+                  <DropdownItem to="/admin/user-profile" >
+                    <i className="ni ni-single-02" />
+                    <span>My profile</span>
+                  </DropdownItem>
+                  <DropdownItem to="/admin/user-profile" >
+                    <i className="ni ni-settings-gear-65" />
+                    <span>Settings</span>
+                  </DropdownItem>
+                  <DropdownItem to="/admin/user-profile" >
+                    <i className="ni ni-calendar-grid-58" />
+                    <span>Activity</span>
+                  </DropdownItem>
+                  <DropdownItem to="/admin/user-profile" >
+                    <i className="ni ni-support-16" />
+                    <span>Support</span>
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem href="#pablo" onClick={this.handleClick}>
+                    <i className="ni ni-user-run" />
+                    <span>Logout</span>
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+              <select 
+        value={this.state.selectValue} 
+        onChange={this.handleChange} 
+      >
+       <option value="Orange">Orange</option>
+        <option value="Radish">Radish</option>
+        <option value="Cherry">Cherry</option>
+      </select>
                       </Row>
                       <Button color="primary" name = "confirm" type="submit" className=" text-center">
                       ADD
