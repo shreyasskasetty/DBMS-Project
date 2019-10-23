@@ -23,6 +23,7 @@ import {
   CardHeader,
   Table,
   Row,
+  Input,
   Form,
   Col
 } from "reactstrap";
@@ -41,7 +42,7 @@ class Billing extends React.Component {
 }
   handleSubmit(event){
     event.preventDefault();
-    console.log("confirm")
+    console.log(event.target.phoneNo.value)
         
         var data = []
         this.state.products.forEach(function(item){
@@ -55,12 +56,15 @@ class Billing extends React.Component {
         });
         
         console.log(data)
-
+        const data1 = {
+          data : data,
+          phoneNo : event.target.phoneNo.value
+        }
         fetch("/confBilling", {
           method: 'POST',
           headers: {
           'Content-Type': 'application/json'},
-          body: JSON.stringify(data) 
+          body: JSON.stringify(data1) 
           })
           .then(function(response) {
             if (response.status >= 400) {
@@ -82,7 +86,6 @@ class Billing extends React.Component {
 
     if (event.target.name === "generate"){
       console.log("generate")
-      console.log(event.target)
       this.setState({
       ...this.state,
       list : 1
@@ -164,7 +167,8 @@ class Billing extends React.Component {
           <tr key={key}>
             <th scope="row" className = "text-center">{data.name}</th>
             <td className = "text-center">{data.quantity}</td>
-          </tr>)
+          </tr>
+          )
           }
           else
           {return null} 
@@ -211,6 +215,21 @@ class Billing extends React.Component {
               <Button color="primary" onClick={this.handleClick} name = "back">
                     Back
               </Button>
+
+              <Col >
+                            <label
+                              className="form-control-label"
+                            >
+                            <b className="text-white">Phone Number</b>
+                            </label>
+                            <Input
+                              className="form-control-alternative text-dark"
+                              id="phoneNo"
+                              type="number"
+                              name="phoneNo"
+                              autoComplete = "off"
+                            />
+                        </Col>
               </div>
                 </Form>
               
