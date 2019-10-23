@@ -82,6 +82,7 @@ class Billing extends React.Component {
 
     if (event.target.name === "generate"){
       console.log("generate")
+      console.log(event.target)
       this.setState({
       ...this.state,
       list : 1
@@ -96,7 +97,9 @@ class Billing extends React.Component {
       })  
     }
   }
-
+  handleChange(event){
+    console.log(event.target)
+  }
   billingList =()=>{
     return (
       <>
@@ -258,7 +261,10 @@ class Billing extends React.Component {
                         <input type="number" defaultValue={data.quantity} className="number text-center" min="1" 
                         max = {data.stock}  style = {{width: 50}} onChange = {
                           (e)=>{
+                            if (parseInt(e.target.value) <= data.stock)
                             data.quantity = parseInt( e.target.value)
+                            else
+                            e.target.value = 0
                           }
                         }></input>
                         <sub></sub>

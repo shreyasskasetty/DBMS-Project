@@ -49,13 +49,14 @@ class Tables extends React.Component {
     super(props)  
     this.state={
       products:[],
-      selectValue:secA
+      selectValue:'secA'
     }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleClick = this.handleClick.bind(this)
 
   }
-  handleChange(e){
-    this.setState({selectValue:e.target.value});
+  handleClick(e){
+    this.setState({selectValue:e.currentTarget.textContent});
   }
   handleSubmit(event){
     event.preventDefault();
@@ -89,7 +90,8 @@ class Tables extends React.Component {
         })
         .then(function(data){         
         if(data.status === "success"){
-          alert("sucessful")
+          setP(data.data)
+          
           document.getElementById('addProduct').reset();
         }
         }).catch(function(err) {
@@ -324,6 +326,7 @@ class Tables extends React.Component {
                               id="pname"
                               type="Text"
                               name="pname"
+                              autoComplete="off"
                               defaultValue = ""
                             />
                           </FormGroup>
@@ -367,7 +370,7 @@ class Tables extends React.Component {
               <DropdownToggle nav className="">
                
                 <Col >
-                          <FormGroup>
+                          <FormGroup >
                             <label
                               className="form-control-label"
                             >
@@ -378,6 +381,8 @@ class Tables extends React.Component {
                               id="section"
                               type="text"
                               name="section"
+                              autoComplete = "off"
+                              value = {this.state.selectValue}
                             />
                           </FormGroup>
                         </Col>
@@ -387,58 +392,12 @@ class Tables extends React.Component {
                 className="dropdown-menu-arrow"
                 right
               >
-                <DropdownItem >secA</DropdownItem>
-                <DropdownItem>secB</DropdownItem>
-                <DropdownItem>secC</DropdownItem>
+                <DropdownItem ><div onClick={this.handleClick}>secA</div></DropdownItem>
+                <DropdownItem  ><div onClick={this.handleClick}>secB</div></DropdownItem>
+                <DropdownItem  ><div onClick={this.handleClick}>secC</div></DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
                         
-            <UncontrolledDropdown nav>
-                <DropdownToggle className="pr-0" nav>
-                  <Media className="align-items-center">
-                    
-                    <Media className="ml-2 d-none d-lg-block">
-                      <span className="mb-0 text-sm font-weight-bold">
-                        Jessica Jones
-                      </span>
-                    </Media>
-                  </Media>
-                </DropdownToggle>
-                <DropdownMenu className="dropdown-menu-arrow" right>
-                  <DropdownItem className="noti-title" header tag="div">
-                    <h6 className="text-overflow m-0">Welcome!</h6>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" >
-                    <i className="ni ni-single-02" />
-                    <span>My profile</span>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" >
-                    <i className="ni ni-settings-gear-65" />
-                    <span>Settings</span>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" >
-                    <i className="ni ni-calendar-grid-58" />
-                    <span>Activity</span>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" >
-                    <i className="ni ni-support-16" />
-                    <span>Support</span>
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem href="#pablo" onClick={this.handleClick}>
-                    <i className="ni ni-user-run" />
-                    <span>Logout</span>
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <select 
-        value={this.state.selectValue} 
-        onChange={this.handleChange} 
-      >
-       <option value="Orange">Orange</option>
-        <option value="Radish">Radish</option>
-        <option value="Cherry">Cherry</option>
-      </select>
                       </Row>
                       <Button color="primary" name = "confirm" type="submit" className=" text-center">
                       ADD
