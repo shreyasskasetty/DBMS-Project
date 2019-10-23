@@ -4,7 +4,7 @@ const initstate = {
     eLogin: false,
     aLogin: false
 }
-const rootReducer = (state, action)=>{
+const rootReducer = (state=initstate, action)=>{
      switch(action.type){
          case 'updateEmpID': 
          state ={

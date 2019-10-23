@@ -246,6 +246,66 @@ class Tables extends React.Component {
             </div>
           </Row>
           {/* Dark table */}
+          <br>
+          </br>
+          <br>
+          </br>
+          <Row>
+          <div className="col">
+              <Card className=" bg-default shadow">
+                <CardHeader className="bg-transparent border-0">
+                  <h3 className="mb-0 text-white">Product tables</h3>
+                </CardHeader>
+                <Table 
+                  className="align-items-center table-dark table-flush"
+                  responsive>
+                  <thead className="thead-dark">
+                    <tr>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Cost</th>
+                      <th scope="col">Stock</th>
+                    </tr>
+                  </thead>
+                  <tbody>{this.disp(this.state.products)}</tbody>
+                </Table>
+                <CardFooter className="py-4 bg-default shadow">
+                  
+                  <nav aria-label="...">
+
+                  <Form onSubmit={this.handleSubmit} method="post" id = "updateForm">
+                  <Row className="justify-content-center">
+                        
+                        <Col lg="3">
+                          <FormGroup>
+                            <label
+                              className="form-control-label"
+                            >
+                            <b className="text-white">Product Name</b>
+                            </label>
+                            <Input
+                              className="form-control-alternative text-dark"
+                              id="Text"
+                              type="Text"
+                              name="Text"
+                              defaultValue = ""
+                            />
+                          </FormGroup>
+                        </Col>
+
+                        
+
+                       
+                      </Row>
+                      <Button color="primary" name = "confirm" type="submit" className=" text-center">
+                      UPDATE
+                      </Button>
+                      </Form>
+                    
+                  </nav>
+                </CardFooter>
+              </Card>
+            </div>
+          </Row>
           
         </Container>
       </>
