@@ -26,6 +26,8 @@ import Icons from "views/examples/Icons.jsx";
 import EmpRegister from "./views/examples/EmpRegister";
 import Billing from "./views/examples/Billing";
 import Inventory from "./views/examples/Inventory";
+import Notification from "./views/examples/Notification";
+
 
 var routes = [
   {
@@ -115,6 +117,14 @@ var routes = [
     component: Inventory,
     layout: "/auth",
     flag: 0
+  },
+  {
+    path: "/notification",
+    name: "Notification",
+    icon: "ni ni-archive-2 text-pink",
+    component: Notification,
+    layout: "/admin",
+    flag: 1
   }
 ];
 export default routes;

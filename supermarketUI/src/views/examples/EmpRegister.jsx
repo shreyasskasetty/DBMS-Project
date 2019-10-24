@@ -18,6 +18,7 @@
 import React from "react";
 import {connect} from "react-redux";
 // reactstrap components
+import firebase from '../../config/fbConfig'
 import {
   Button,
   Card,
@@ -50,8 +51,15 @@ class EmpRegister extends React.Component {
         ...this.state,
         adminName : name
       })
+    
     }
+    const db = firebase.firestore();
 
+    db.collection("argon")
+    .onSnapshot((snap) => {
+      const changes = snap.docChanges();
+      changes.forEach((change) =>{console.log(change)})
+    })
     const data = {adminId :this.props.adminId}
 
     fetch("/adminName", {
