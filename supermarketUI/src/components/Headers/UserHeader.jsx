@@ -39,7 +39,7 @@ class UserHeader extends React.Component {
               <Col lg="7" md="10">
                 <h1 className="display-2 text-white">{this.props.adminName}</h1>
                 <p className="text-white mt-0 mb-5">
-                  This is admin page. You can manage the products and register employee
+                  {this.props.count>0?"You have "+this.props.count+" Employee Registration requests!!":"No Requests!!"}
                 </p>
                 {/* <Button
                   color="info"
