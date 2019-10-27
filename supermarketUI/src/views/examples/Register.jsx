@@ -20,7 +20,6 @@ import {
 class Register extends React.Component {
   constructor(props) {
     super(props)
-    console.log(props.eLogin)
     this.state = {
         msg: '',
         name : '',
@@ -36,7 +35,6 @@ logChange(e) {
   this.setState({[e.target.name]: e.target.value});  
 }
   handleSubmit(event){
-    console.log(this.props)
     event.preventDefault();
     const data = {
       name : event.target.name.value
@@ -46,6 +44,7 @@ logChange(e) {
       ,empid:this.props.empId
       ,mssg : this.state.msg
     }
+    console.log(data)
     fetch("/signup", {
       method: 'POST',
       headers: {
@@ -224,10 +223,10 @@ logChange(e) {
   }
 }
 const mapStateToProps=(state)=>{
-  console.log(state.empId)
+  console.log(state)  
   return {
-    empId : state.empId,
-    adminId : state.adminId
+    empId : state.empid,
+    adminId : state.adminid
   }
 }
  const mapDispatchToProps= (dispatch)=>{

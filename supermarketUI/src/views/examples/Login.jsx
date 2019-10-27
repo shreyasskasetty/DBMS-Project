@@ -144,6 +144,7 @@ handleClick(event){
 }
 
 const mapStateToProps = (state) =>{
+  console.log(state)
   return {
     eLogin : state.eLogin,
     aLogin : state.aLogin

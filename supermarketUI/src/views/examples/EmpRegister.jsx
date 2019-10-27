@@ -50,8 +50,7 @@ class EmpRegister extends React.Component {
       this.setState ({
         ...this.state,
         adminName : name
-      })
-    
+      }) 
     }
     const db = firebase.firestore();
 
