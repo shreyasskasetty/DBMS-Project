@@ -34,7 +34,8 @@ class Billing extends React.Component {
     super(props)  
     this.state={
       products:[],
-      list : 0
+      list : 0,
+      sum : 0
     }
     this.handleClick = this.handleClick.bind(this)
     this.billingList = this.billingList.bind(this)
@@ -60,26 +61,37 @@ class Billing extends React.Component {
           data : data,
           phoneNo : event.target.phoneNo.value
         }
-        fetch("/confBilling", {
-          method: 'POST',
-          headers: {
-          'Content-Type': 'application/json'},
-          body: JSON.stringify(data1) 
-          })
-          .then(function(response) {
-            if (response.status >= 400) {
-              throw new Error("Bad response from server");
-            }
-            return response.json();
-          })
-          .then(function(data){         
-            if (data.status === "success")
-            {
-              window.location.assign("/auth/register");
-            }
-          }).catch(function(err) {
-          console.log(err)
-          });
+        console.log(data1)
+        if (data1.phoneNo)
+        {
+          fetch("/confBilling", {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'},
+            body: JSON.stringify(data1) 
+            })
+            .then(function(response) {
+              if (response.status >= 400) {
+                throw new Error("Bad response from server");
+              }
+              return response.json();
+            })
+            .then(function(data){         
+              if (data.status === "success")
+              {
+                window.location.assign("/auth/register");
+              }
+              else if (data.status === "failure")
+              {
+                alert(data.message)
+              }
+            }).catch(function(err) {
+            console.log(err)
+            });
+        }
+        else {
+          alert('Phone Number')
+        }
   }
 
   handleClick(event){
@@ -201,20 +213,14 @@ class Billing extends React.Component {
                     {dispList()}
                     <tr>
                       <th scope="col" className = "text-center"><b>Total</b></th>
-                      <th scope="col" className = "text-center"><b>{sum}</b> </th>
+                      <th scope="col" className = "text-center" name = "sum">{sum} </th>
                     </tr>
                   </tbody>
                 </Table>
               </Card>
 
                 <div className="text-muted text-center mt-2 mb-4">
-              <Button color="primary" name = "confirm" type="submit">
-                    Confirm Products
-              </Button>
-
-              <Button color="primary" onClick={this.handleClick} name = "back">
-                    Back
-              </Button>
+              
 
               <Col >
                             <label
@@ -230,6 +236,14 @@ class Billing extends React.Component {
                               autoComplete = "off"
                             />
                         </Col>
+                        <br></br>
+                        <Button color="primary" name = "confirm" type="submit">
+                    Confirm Products
+              </Button>
+
+              <Button color="primary" onClick={this.handleClick} name = "back">
+                    Back
+              </Button>
               </div>
                 </Form>
               
