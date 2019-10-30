@@ -43,7 +43,6 @@ import {
   chartOptions,
   parseOptions,
   chartExample1,
-  chartExample2
 } from "variables/charts.jsx";
 
 import Header from "components/Headers/Header.jsx";
@@ -51,8 +50,147 @@ import Header from "components/Headers/Header.jsx";
 class Index extends React.Component {
   state = {
     activeNav: 1,
-    chartExample1Data: "data1"
+    chartExample1Data: "data1",
+    chartExampl : {
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                callback: function(value) {
+                  if (!(value % 10)) {
+                    //return '$' + value + 'k'
+                    return value;
+                  }
+                }
+              }
+            }
+          ]
+        },
+        tooltips: {
+          callbacks: {
+            label: function(item, data) {
+              var label = data.datasets[item.datasetIndex].label || "";
+              var yLabel = item.yLabel;
+              var content = "";
+              if (data.datasets.length > 1) {
+                content += label;
+              }
+              content += yLabel;
+              return content;
+            }
+          }
+        }
+      },
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "Sales",
+            data: []
+          }
+        ]
+      }
+    },
+    cusData:[]
   };
+
+  componentDidMount(){
+    var dat = []
+    const setP= (dat)=>{
+      var labels = []
+      var qu = []
+      for (let i=0; i< dat.length;i++)
+      {
+        labels.push(dat[i].name)
+        qu.push(dat[i].sq)
+      }
+      var temChat = this.state.chartExampl
+      temChat.data.labels = labels
+      temChat.data.datasets.push({label: "sales", data : qu})
+      this.setState({
+          ...this.state,
+          chartExampl : temChat
+      })
+    }
+    const setC = (data)=>{
+      this.setState({
+        ...this.state,
+        cusData : data
+      })
+    }
+    fetch("/chartData", {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'},
+      body: null
+      })
+      .then(function(response) {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      })
+      .then(function(data){         
+        if (data.status === "success")
+        {
+          setP(data.rows)
+        }
+        else if (data.status === "failure")
+        {
+          alert(data.message)
+        }
+      }).catch(function(err) {
+      console.log(err)
+      });
+
+      fetch("/cusData", {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'},
+        body: null
+        })
+        .then(function(response) {
+          if (response.status >= 400) {
+            throw new Error("Bad response from server");
+          }
+          return response.json();
+        })
+        .then(function(data){         
+          if (data.status === "success")
+          {
+            setC(data.rows)
+          }
+          else if (data.status === "failure")
+          {
+            alert(data.message)
+          }
+        }).catch(function(err) {
+        console.log(err)
+        });
+      
+      
+  }
+
+  dispTable = ()=>{
+    var list = this.state.cusData
+    console.log(list)
+    if (list.length !== 0)
+    {
+      return(
+        list.map((data,key)=>{
+          return(
+            <tr>
+                      <th scope="row">{data.name}</th>
+                      <td>{data.sq}</td>
+                     
+                    </tr>
+          )
+        })
+      )
+    }
+    else return null
+  }
   toggleNavs = (e, index) => {
     e.preventDefault();
     this.setState({
@@ -79,7 +217,74 @@ class Index extends React.Component {
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
-            <Col className="mb-5 mb-xl-0" xl="8">
+          <Col className="mb-5 mb-xl-0" xl="8">
+              <Card className="shadow">
+                <CardHeader className="border-0">
+                  <Row className="align-items-center">
+                    <div className="col">
+                      <h3 className="mb-0">Customer visits</h3>
+                    </div>
+                    <div className="col text-right">
+                      <Button
+                        color="primary"
+                        href="#pablo"
+                        onClick={e => e.preventDefault()}
+                        size="sm"
+                      >
+                        See all
+                      </Button>
+                    </div>
+                  </Row>
+                </CardHeader>
+
+                <Table className="align-items-center table-flush" responsive>
+                  <thead className="thead-light">
+                    <tr>
+                      <th scope="col">Customer name</th>
+                      <th scope="col">Visits</th>
+                     
+                    </tr>
+                   
+                  </thead>
+                  <tbody>
+                    {this.dispTable()}
+
+                  </tbody>
+                </Table>
+              </Card>
+            </Col>
+
+            
+
+            {/*Total Sales */}
+            <Col xl="4">
+              <Card className="shadow">
+                <CardHeader className="bg-transparent">
+                  <Row className="align-items-center">
+                    <div className="col">
+                      <h6 className="text-uppercase text-muted ls-1 mb-1">
+                        Performance
+                      </h6>
+                      <h2 className="mb-0">Total orders</h2>
+                    </div>
+                  </Row>
+                </CardHeader>
+               
+                <CardBody>
+                  {/* Chart */}
+                  <div className="chart">
+                    <Bar
+                      data={this.state.chartExampl.data}
+                      options={this.state.chartExampl.options}
+                    />
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+
+          <Row className="mt-5">
+          <Col className="mb-5 mb-xl-0" xl="8">
               <Card className="bg-gradient-default shadow">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
@@ -132,109 +337,7 @@ class Index extends React.Component {
                 </CardBody>
               </Card>
             </Col>
-            <Col xl="4">
-              <Card className="shadow">
-                <CardHeader className="bg-transparent">
-                  <Row className="align-items-center">
-                    <div className="col">
-                      <h6 className="text-uppercase text-muted ls-1 mb-1">
-                        Performance
-                      </h6>
-                      <h2 className="mb-0">Total orders</h2>
-                    </div>
-                  </Row>
-                </CardHeader>
-                <CardBody>
-                  {/* Chart */}
-                  <div className="chart">
-                    <Bar
-                      data={chartExample2.data}
-                      options={chartExample2.options}
-                    />
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <Row className="mt-5">
-            <Col className="mb-5 mb-xl-0" xl="8">
-              <Card className="shadow">
-                <CardHeader className="border-0">
-                  <Row className="align-items-center">
-                    <div className="col">
-                      <h3 className="mb-0">Page visits</h3>
-                    </div>
-                    <div className="col text-right">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        size="sm"
-                      >
-                        See all
-                      </Button>
-                    </div>
-                  </Row>
-                </CardHeader>
-                <Table className="align-items-center table-flush" responsive>
-                  <thead className="thead-light">
-                    <tr>
-                      <th scope="col">Page name</th>
-                      <th scope="col">Visitors</th>
-                      <th scope="col">Unique users</th>
-                      <th scope="col">Bounce rate</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">/argon/</th>
-                      <td>4,569</td>
-                      <td>340</td>
-                      <td>
-                        <i className="fas fa-arrow-up text-success mr-3" />{" "}
-                        46,53%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">/argon/index.html</th>
-                      <td>3,985</td>
-                      <td>319</td>
-                      <td>
-                        <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                        46,53%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">/argon/charts.html</th>
-                      <td>3,513</td>
-                      <td>294</td>
-                      <td>
-                        <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                        36,49%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">/argon/tables.html</th>
-                      <td>2,050</td>
-                      <td>147</td>
-                      <td>
-                        <i className="fas fa-arrow-up text-success mr-3" />{" "}
-                        50,87%
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">/argon/profile.html</th>
-                      <td>1,795</td>
-                      <td>190</td>
-                      <td>
-                        <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                        46,53%
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Card>
-            </Col>
+
             <Col xl="4">
               <Card className="shadow">
                 <CardHeader className="border-0">

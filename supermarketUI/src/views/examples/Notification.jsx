@@ -22,13 +22,10 @@ import firebase from '../../config/fbConfig'
 import {
   Button,
   Card,
-  CardHeader,
+ 
   CardBody,
   CardTitle,
-  FormGroup,
-  Form,
-  Input,
-  Container,
+  
   Row,
   Col
 } from "reactstrap";

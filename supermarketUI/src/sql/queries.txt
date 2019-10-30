@@ -6,3 +6,12 @@ create table bill_product ( bid int(11) not null,
     quantity int(11),
     primary key(bid,pid),
     foreign key (pid) references product(pid));
+
+
+##To get info for the chart
+select name,sq  
+from    (select pid,sum(quantity) as sq from bill_product group by pid) as t 
+        natural join 
+        product;
+
+select name,sq  from    (select cid,count(bid) as sq from bills group by cid) as t natural join customer;

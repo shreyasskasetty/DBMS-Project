@@ -57,9 +57,12 @@ class Billing extends React.Component {
         });
         
         console.log(data)
+        var d = new Date()
+        var date = d.getFullYear()+":"+d.getMonth()+":"+d.getDate()
         const data1 = {
           data : data,
-          phoneNo : event.target.phoneNo.value
+          phoneNo : event.target.phoneNo.value,
+          date : date
         }
         console.log(data1)
         if (data1.phoneNo)
@@ -98,6 +101,7 @@ class Billing extends React.Component {
 
     if (event.target.name === "generate"){
       console.log("generate")
+      
       this.setState({
       ...this.state,
       list : 1
@@ -105,7 +109,7 @@ class Billing extends React.Component {
     }
 
     if (event.target.name === "back"){
-      console.log("back")
+     
       this.setState({
         ...this.state,
         list : 0
