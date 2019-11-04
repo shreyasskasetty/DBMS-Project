@@ -27,7 +27,7 @@ import EmpRegister from "./views/examples/EmpRegister";
 import Billing from "./views/examples/Billing";
 import Inventory from "./views/examples/Inventory";
 import Notification from "./views/examples/Notification";
-
+import Sketch from "./views/examples/Sketch"
 
 var routes = [
   {
@@ -35,6 +35,14 @@ var routes = [
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
+    layout: "/admin",
+    flag: 1
+  },
+  {
+    path: "/Sketch",
+    name: "SketchPad",
+    icon: "ni ni-tv-2 text-primary",
+    component: Sketch,
     layout: "/admin",
     flag: 1
   },
