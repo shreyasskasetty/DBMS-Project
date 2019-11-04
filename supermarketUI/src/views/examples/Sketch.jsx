@@ -26,12 +26,11 @@ class Sketch extends Component {
     this.handleMouseUp = this.handleMouseUp.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  handleChange = (e)=>{
-  }
+  Down = false
   handleMouseMove = (e) =>{
     var x = e.clientX
     var y = e.clientY
-    if (this.state.Down)
+    if (this.Down)
     {
       if (x > 510 && x < 1000 && y < 520 && y > 80)
       {
@@ -48,6 +47,7 @@ class Sketch extends Component {
     this.Down = false
   }
   handleSubmit = (e)=>{
+    e.preventDefault();
     const db = firebase.firestore()
     var number = e.target.number.value
     console.log(number)
@@ -61,6 +61,7 @@ class Sketch extends Component {
     .catch(function(error) {
       console.error("Error writing document: ", error);
     });
+    window.location.assign("/admin/index");
 
   }
      render() {
@@ -85,7 +86,7 @@ class Sketch extends Component {
               </Col>
               
               <Col lg= "3"></Col>
-              <Form role="form"  onSubmit={event => this.handleSubmit(event)} method="POST">
+              <Form role="form"  onSubmit={this.handleSubmit} >
               <FormGroup>
                   <InputGroup className="input-group-alternative mb-3">
                     <InputGroupAddon addonType="prepend">
