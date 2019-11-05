@@ -50,6 +50,7 @@ class Billing extends React.Component {
           if (item.quantity !== 0){
             var pro = {
             pid : item.pid,
+            name : item.name,
             quantity : item.quantity
             }
             data.push(pro)
@@ -62,7 +63,9 @@ class Billing extends React.Component {
         const data1 = {
           data : data,
           phoneNo : event.target.phoneNo.value,
-          date : date
+          date : date,
+          emailid: event.target.emailId.value,
+          sum : document.getElementById('sum').textContent
         }
         console.log(data1)
         if (data1.phoneNo)
@@ -168,13 +171,11 @@ class Billing extends React.Component {
         
    </>
   )}
-
   cList = ()=>{
     var sum = 0;
     this.state.products.forEach(function(item){
       sum += item.cost * item.quantity
     });
-    
     const dispList = () => {
       return (
         this.state.products.map((data,key)=>{
@@ -217,7 +218,7 @@ class Billing extends React.Component {
                     {dispList()}
                     <tr>
                       <th scope="col" className = "text-center"><b>Total</b></th>
-                      <th scope="col" className = "text-center" name = "sum">{sum} </th>
+                      <th id="sum" scope="col" className = "text-center" name = "sum">{sum} </th>
                     </tr>
                   </tbody>
                 </Table>
@@ -239,13 +240,25 @@ class Billing extends React.Component {
                               name="phoneNo"
                               autoComplete = "off"
                             />
+                            <label
+                              className="form-control-label"
+                            >
+                            <b className="text-white">Email ID</b>
+                            </label>
+                            <Input
+                              className="form-control-alternative text-dark"
+                              id="emailId"
+                              type="text"
+                              name="emailId"
+                              autoComplete = "off"
+                            />
                         </Col>
                         <br></br>
-                        <Button color="primary" name = "confirm" type="submit">
+                        <Button value={sum} color="primary" name = "confirm" type="submit">
                     Confirm Products
               </Button>
 
-              <Button color="primary" onClick={this.handleClick} name = "back">
+              <Button  color="primary" onClick={this.handleClick} name = "back">
                     Back
               </Button>
               </div>
