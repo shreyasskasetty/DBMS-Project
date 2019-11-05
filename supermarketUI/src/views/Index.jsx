@@ -48,6 +48,10 @@ import {
 import Header from "components/Headers/Header.jsx";
 
 class Index extends React.Component {
+  constructor(props){
+    super(props)
+    this.dispTable = this.dispTable.bind(this )
+  }
   state = {
     activeNav: 1,
     chartExample1Data: "data1",
