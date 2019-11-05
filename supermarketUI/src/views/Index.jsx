@@ -113,6 +113,7 @@ class Index extends React.Component {
           chartExampl : temChat
       })
     }
+
     const setC = (data)=>{
       this.setState({
         ...this.state,
@@ -171,17 +172,27 @@ class Index extends React.Component {
       
       
   }
-
+  handleClick = (e)=>{
+    e.preventDefault()
+    var list = this.state.cusData
+    var id = e.currentTarget.dataset.id
+    console.log( id )
+    list.forEach((item)=>{
+        if (item.cid ===parseInt( id))
+        {
+          console.log(item.name+"  "+item.sq)
+        }
+    })
+  }
   dispTable = ()=>{
     var list = this.state.cusData
-    console.log(list)
     if (list.length !== 0)
     {
       return(
         list.map((data,key)=>{
           return(
-            <tr>
-                      <th scope="row">{data.name}</th>
+            <tr key = {data.cid} data-id= {data.cid} value={data.cid} onClick={this.handleClick}>
+                      <th scope="row"  ><div id = {data.cid}> {data.name}</div></th>
                       <td>{data.sq}</td>
                      
                     </tr>
