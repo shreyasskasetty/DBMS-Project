@@ -35,8 +35,8 @@ class Sketch extends Component {
       if (x > 510 && x < 1000 && y < 520 && y > 80)
       {
         console.log(x+" "+y)
-      this.X.push(x)
-      this.Y.push(y)
+      this.X.push(x-500)
+      this.Y.push(y-80)
       }
     }
   }
@@ -61,7 +61,6 @@ class Sketch extends Component {
     .catch(function(error) {
       console.error("Error writing document: ", error);
     });
-    window.location.assign("/admin/index");
 
   }
      render() {
