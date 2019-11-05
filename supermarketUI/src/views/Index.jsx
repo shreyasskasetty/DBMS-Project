@@ -96,12 +96,53 @@ class Index extends React.Component {
         ]
       }
     },
+    chartExampl1 : {
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                callback: function(value) {
+                  if (!(value % 10)) {
+                    //return '$' + value + 'k'
+                    return value;
+                  }
+                }
+              }
+            }
+          ]
+        },
+        tooltips: {
+          callbacks: {
+            label: function(item, data) {
+              var label = data.datasets[item.datasetIndex].label || "";
+              var yLabel = item.yLabel;
+              var content = "";
+              if (data.datasets.length > 1) {
+                content += label;
+              }
+              content += yLabel;
+              return content;
+            }
+          }
+        }
+      },
+      data: {
+        labels: [],
+        datasets: [
+          {
+            label: "Sales",
+            data: []
+          }
+        ]
+      }
+    },
     cusData:[]
   };
 
   componentDidMount(){
-    var dat = []
     const setP= (dat)=>{
+      console.log('chnages')
       var labels = []
       var qu = []
       for (let i=0; i< dat.length;i++)
@@ -176,18 +217,56 @@ class Index extends React.Component {
       
       
   }
+
+
   handleClick = (e)=>{
     e.preventDefault()
-    var list = this.state.cusData
     var id = e.currentTarget.dataset.id
-    console.log( id )
-    list.forEach((item)=>{
-        if (item.cid ===parseInt( id))
-        {
-          console.log(item.name+"  "+item.sq)
+    
+    const setX= (dat)=>{
+      var labels1 = []
+      var qu1 = []
+      for (let i=0; i< dat.length;i++)
+      {
+        labels1.push(dat[i].pid)
+        qu1.push(dat[i].sq)
+      }
+      var temChat = this.state.chartExampl1
+      temChat.data.labels = labels1
+      temChat.data.datasets.push({label: "sales", data : qu1})
+      this.setState({
+          ...this.state,
+          chartExampl1 : temChat
+      })
+    }
+    
+    fetch("/cusAnalysis", {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'},
+      body: JSON.stringify({cid : id})
+      })
+      .then(function(response) {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
         }
-    })
+        return response.json();
+      })
+      .then(function(data){
+        if (data.staus === true)
+        {
+          setX(data.data)
+        }
+        else if (data.staus === false)
+        {
+          alert(data.message)
+        }
+      }).catch(function(err) {
+      console.log(err)
+      });
   }
+
+
   dispTable = ()=>{
     var list = this.state.cusData
     if (list.length !== 0)
@@ -198,6 +277,17 @@ class Index extends React.Component {
             <tr key = {data.cid} data-id= {data.cid} value={data.cid} onClick={this.handleClick}>
                       <th scope="row"  ><div id = {data.cid}> {data.name}</div></th>
                       <td>{data.sq}</td>
+                      <td>
+                      <div className="col text-right">
+                      <Button
+                        color="primary"
+                        size="sm"
+                        value = {data.cid}
+                      >
+                        Analyse
+                      </Button>
+                    </div>
+                      </td>
                      
                     </tr>
           )
@@ -206,20 +296,7 @@ class Index extends React.Component {
     }
     else return null
   }
-  toggleNavs = (e, index) => {
-    e.preventDefault();
-    this.setState({
-      activeNav: index,
-      chartExample1Data:
-        this.state.chartExample1Data === "data1" ? "data2" : "data1"
-    });
-    let wow = () => {
-      console.log(this.state);
-    };
-    wow.bind(this);
-    setTimeout(() => wow(), 1000);
-    // this.chartReference.update();
-  };
+
   componentWillMount() {
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
@@ -239,16 +316,7 @@ class Index extends React.Component {
                     <div className="col">
                       <h3 className="mb-0">Customer visits</h3>
                     </div>
-                    <div className="col text-right">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        size="sm"
-                      >
-                        See all
-                      </Button>
-                    </div>
+                    
                   </Row>
                 </CardHeader>
 
@@ -297,170 +365,31 @@ class Index extends React.Component {
               </Card>
             </Col>
           </Row>
-
           <Row className="mt-5">
-          <Col className="mb-5 mb-xl-0" xl="8">
-              <Card className="bg-gradient-default shadow">
+            <Col xl="4"> 
+            <Card className="shadow">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
                     <div className="col">
-                      <h6 className="text-uppercase text-light ls-1 mb-1">
-                        Overview
+                      <h6 className="text-uppercase text-muted ls-1 mb-1">
+                        Customer
                       </h6>
-                      <h2 className="text-white mb-0">Sales value</h2>
-                    </div>
-                    <div className="col">
-                      <Nav className="justify-content-end" pills>
-                        <NavItem>
-                          <NavLink
-                            className={classnames("py-2 px-3", {
-                              active: this.state.activeNav === 1
-                            })}
-                            href="#pablo"
-                            onClick={e => this.toggleNavs(e, 1)}
-                          >
-                            <span className="d-none d-md-block">Month</span>
-                            <span className="d-md-none">M</span>
-                          </NavLink>
-                        </NavItem>
-                        <NavItem>
-                          <NavLink
-                            className={classnames("py-2 px-3", {
-                              active: this.state.activeNav === 2
-                            })}
-                            data-toggle="tab"
-                            href="#pablo"
-                            onClick={e => this.toggleNavs(e, 2)}
-                          >
-                            <span className="d-none d-md-block">Week</span>
-                            <span className="d-md-none">W</span>
-                          </NavLink>
-                        </NavItem>
-                      </Nav>
+                      <h2 className="mb-0">Total orders</h2>
                     </div>
                   </Row>
                 </CardHeader>
+               
                 <CardBody>
-                  {/* Chart */}
                   <div className="chart">
-                    <Line
-                      data={chartExample1[this.state.chartExample1Data]}
-                      options={chartExample1.options}
-                      getDatasetAtEvent={e => console.log(e)}
+                    <Bar
+                      data={this.state.chartExampl1.data}
+                      options={this.state.chartExampl1.options}
                     />
                   </div>
                 </CardBody>
-              </Card>
-            </Col>
-
-            <Col xl="4">
-              <Card className="shadow">
-                <CardHeader className="border-0">
-                  <Row className="align-items-center">
-                    <div className="col">
-                      <h3 className="mb-0">Social traffic</h3>
-                    </div>
-                    <div className="col text-right">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        size="sm"
-                      >
-                        See all
-                      </Button>
-                    </div>
-                  </Row>
-                </CardHeader>
-                <Table className="align-items-center table-flush" responsive>
-                  <thead className="thead-light">
-                    <tr>
-                      <th scope="col">Referral</th>
-                      <th scope="col">Visitors</th>
-                      <th scope="col" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">Facebook</th>
-                      <td>1,480</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">60%</span>
-                          <div>
-                            <Progress
-                              max="100"
-                              value="60"
-                              barClassName="bg-gradient-danger"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Facebook</th>
-                      <td>5,480</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">70%</span>
-                          <div>
-                            <Progress
-                              max="100"
-                              value="70"
-                              barClassName="bg-gradient-success"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Google</th>
-                      <td>4,807</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">80%</span>
-                          <div>
-                            <Progress max="100" value="80" />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Instagram</th>
-                      <td>3,678</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">75%</span>
-                          <div>
-                            <Progress
-                              max="100"
-                              value="75"
-                              barClassName="bg-gradient-info"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">twitter</th>
-                      <td>2,645</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="mr-2">30%</span>
-                          <div>
-                            <Progress
-                              max="100"
-                              value="30"
-                              barClassName="bg-gradient-warning"
-                            />
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Card>
-            </Col>
+                </Card>
+                
+            </Col> 
           </Row>
         </Container>
       </>
