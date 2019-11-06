@@ -16,6 +16,8 @@
 
 */
 import React from "react";
+import firebase from '../config/fbConfig'
+
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 // javascipt plugin for creating charts
@@ -46,6 +48,7 @@ import {
 } from "variables/charts.jsx";
 
 import Header from "components/Headers/Header.jsx";
+import { func } from 'prop-types';
 
 class Index extends React.Component {
   constructor(props){
@@ -218,11 +221,35 @@ class Index extends React.Component {
       
   }
 
-
+  mailOffer=(sec,id)=>{
+    fetch("/secProds", {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'},
+      body: JSON.stringify({section:sec,cid:id})
+      })
+      .then(function(response) {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      })
+      .then(function(data){
+        if (data.staus === true)
+        {
+          alert('offer sent')
+        }
+        else if (data.staus === false)
+        {
+          alert(data.message)
+        }
+      }).catch(function(err) {
+      console.log(err)
+      });
+  }
   handleClick = (e)=>{
     e.preventDefault()
     var id = e.currentTarget.dataset.id
-    
     const setX= (dat)=>{
       var labels1 = []
       var qu1 = []
@@ -264,6 +291,55 @@ class Index extends React.Component {
       }).catch(function(err) {
       console.log(err)
       });
+      fetch("/analysis", {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'},
+        body: JSON.stringify({cid : id})
+        })
+        .then(function(response) {
+          if (response.status >= 400) {
+            throw new Error("Bad response from server");
+          }
+          return response.json();
+        })
+        .then(function(data){
+          if (data.staus === true)
+          {
+            alert(data.loc)
+          }
+          else if (data.staus === false)
+          {
+            alert(data.message)
+          }
+        }).catch(function(err) {
+        console.log(err)
+        });
+        const db = firebase.firestore();
+
+        db.collection("Results")
+    .onSnapshot((snap) => {
+      const changes = snap.docChanges();
+    
+      changes.forEach((change) =>{
+      const data = change.doc.data()
+      data.id = change.doc.id
+      if (change.type === 'added')
+       { console.log(data)
+        if (data.x < 150 )
+          this.mailOffer('secA',id)
+        if (data.x >= 150 && data.x < 300)
+        this.mailOffer('secB',id)
+        if (data.x >= 300)
+        this.mailOffer('secB',id)
+      db.collection('Results').doc(data.id).delete();
+
+      }
+
+      else if (change.type === 'removed')
+        console.log(data)
+      })
+    })
   }
 
 

@@ -58,6 +58,7 @@
     "nouislider": "13.1.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "python-shell": "^1.0.8",
     "react": "16.8.4",
     "react-chartjs-2": "2.7.4",
     "react-copy-to-clipboard": "5.0.1",
