@@ -29,11 +29,16 @@ class Register extends React.Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.logChange = this.logChange.bind(this);
+    this.handleClick = this.handleClick.bind(this)
 }
 logChange(e) {
   e.preventDefault();
   this.setState({[e.target.name]: e.target.value});  
 }
+  handleClick=(e)=>{
+    e.preventDefault();
+    window.location.assign("/auth/Sketch");
+  }
   handleSubmit(event){
     event.preventDefault();
     const data = {
@@ -86,32 +91,10 @@ logChange(e) {
             </CardHeader>
             <CardBody className="px-lg-5 py-lg-5">
               <Form role="form">
-                {/*Phone Number*/}
-                <FormGroup>
-                  <InputGroup className="input-group-alternative mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="ni ni-mobile-button" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Phone Number" name="phoneno" type="number" />
-                  </InputGroup>
-                </FormGroup>
-
-                {/*TagID*/}
-                <FormGroup>
-                  <InputGroup className="input-group-alternative mb-3">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="ni ni-cart" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Tag ID" type="text" name = "tagID"  />
-                  </InputGroup>
-                </FormGroup>                
+                {/*Phone Number*/}           
                 <div className="text-center">
-                  <Button className="mt-4" color="primary" type="submit">
-                    Tag
+                  <Button className="mt-4" color="primary" onClick={this.handleClick}>
+                    Start
                   </Button>
                 </div>
               </Form>

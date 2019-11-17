@@ -68,7 +68,7 @@ class AdminLogin extends React.Component {
         if(dat.success)
         {
         tempProp.updateEmpId(data.adminid)
-        window.location.assign("/admin/EmpRegister");
+        window.location.assign("/admin/Notification");
         }
         else
          alert('Wrong Password')

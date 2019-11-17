@@ -326,12 +326,12 @@ class Index extends React.Component {
       data.id = change.doc.id
       if (change.type === 'added')
        { console.log(data)
-        if (data.x < 150 )
+        if (data.x < 120 )
           this.mailOffer('secA',id)
-        if (data.x >= 150 && data.x < 300)
+        if (data.x >= 120 && data.x < 200)
         this.mailOffer('secB',id)
-        if (data.x >= 300)
-        this.mailOffer('secB',id)
+        if (data.x >= 200)
+        this.mailOffer('secC',id)
       db.collection('Results').doc(data.id).delete();
 
       }
@@ -461,6 +461,26 @@ class Index extends React.Component {
                       data={this.state.chartExampl1.data}
                       options={this.state.chartExampl1.options}
                     />
+                  </div>
+                </CardBody>
+                </Card>
+                
+            </Col> 
+            <Col xl="4"> 
+            <Card className="shadow">
+                <CardHeader className="bg-transparent">
+                  <Row className="align-items-center">
+                    <div className="col">
+                      <h6 className="text-uppercase text-muted ls-1 mb-1">
+                        Heat Map
+                      </h6>
+                    </div>
+                  </Row>
+                </CardHeader>
+               
+                <CardBody>
+                  <div className="chart">
+                    <img src="home/shreyas/DBMS-Project/supermarketUI/src/assets/img/gaphs/img.jpg" alt=""/>
                   </div>
                 </CardBody>
                 </Card>

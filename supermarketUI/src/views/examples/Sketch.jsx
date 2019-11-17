@@ -32,11 +32,11 @@ class Sketch extends Component {
     var y = e.clientY
     if (this.Down)
     {
-      if (x > 510 && x < 1000 && y < 520 && y > 80)
+      if (x > 510 && x < 1000 && y < 760 && y > 280)
       {
         console.log(x+" "+y)
       this.X.push(x-500)
-      this.Y.push(y-80)
+      this.Y.push(y-280)
       }
     }
   }
@@ -45,6 +45,7 @@ class Sketch extends Component {
   }
   handleMouseUp = (e) => {
     this.Down = false
+    
   }
   handleSubmit = (e)=>{
     e.preventDefault();
@@ -57,11 +58,12 @@ class Sketch extends Component {
     })
     .then(function() {
       console.log("Document successfully written!");
+      window.location.assign('/auth/register')
      })
     .catch(function(error) {
       console.error("Error writing document: ", error);
     });
-
+   
   }
      render() {
         return (
@@ -84,27 +86,41 @@ class Sketch extends Component {
                          </div>
               </Col>
               
-              <Col lg= "3"></Col>
-              <Form role="form"  onSubmit={this.handleSubmit} >
+              <Col lg= "3">
+
+              </Col>
+              
+              
+            </Row>
+            <Row className = "align-item-center">
+              <Col lg="3"></Col>
+              <Col lg="6" className = "align-item-center"  >
+                <div>
+                <Form role="form"  onSubmit={this.handleSubmit} >
               <FormGroup>
-                  <InputGroup className="input-group-alternative mb-3">
+                  <InputGroup className="input-group-alternative mb-3 text-center">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
                         <i className="ni ni-cart" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Tag ID" type="number" name = "number"  />
+                    <Input placeholder="number" type="number" name = "number"  />
                   </InputGroup>
                 </FormGroup>                
-                <div className="text-center">
+                <div className="text-center align-item-center">
                   <Button className="mt-4" color="primary" type="submit">
-                    Tag
+                    Upload
                   </Button>
                 </div>
 
               </Form>
+                         </div>
+              </Col>
+              
+              
               
             </Row>
+           
 
                          </div>
           

@@ -43,8 +43,8 @@ var routes = [
     name: "SketchPad",
     icon: "ni ni-tv-2 text-primary",
     component: Sketch,
-    layout: "/admin",
-    flag: 1
+    layout: "/auth",
+    flag: 0
   },
   {
     path: "/icons",
@@ -52,7 +52,7 @@ var routes = [
     icon: "ni ni-planet text-blue",
     component: Icons,
     layout: "/admin",
-    flag: 1
+    flag: 0
   },
   {
     path: "/maps",
@@ -60,7 +60,7 @@ var routes = [
     icon: "ni ni-pin-3 text-orange",
     component: Maps,
     layout: "/admin",
-    flag: 1
+    flag: 0
   },
   {
     path: "/user-profile",
@@ -68,7 +68,7 @@ var routes = [
     icon: "ni ni-single-02 text-yellow",
     component: Profile,
     layout: "/admin",
-    flag: 1
+    flag: 0
   },
   {
     path: "/tables",
@@ -100,7 +100,7 @@ var routes = [
     icon: "ni ni-circle-08 text-pink",
     component: EmpRegister,
     layout: "/admin",
-    flag: 1
+    flag: 0
   },
   {
     path: "/adminlogin",
