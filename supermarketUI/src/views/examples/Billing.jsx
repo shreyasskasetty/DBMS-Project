@@ -35,13 +35,16 @@ class Billing extends React.Component {
     this.state={
       products:[],
       list : 0,
-      sum : 0
+      sum : 0,
+      checkQuant: true
     }
     this.handleClick = this.handleClick.bind(this)
     this.billingList = this.billingList.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.applyCoupon = this.applyCoupon.bind(this)
 }
   handleSubmit(event){
+    console.log(this.state.list)
     event.preventDefault();
     console.log(event.target.phoneNo.value)
         
@@ -119,6 +122,13 @@ class Billing extends React.Component {
       })  
     }
   }
+
+  applyCoupon(event){
+
+
+
+
+  }
   handleChange(event){
     console.log(event.target)
   }
@@ -161,7 +171,7 @@ class Billing extends React.Component {
                 </Table>
               </Card>
               <div className="text-muted text-center mt-2 mb-4">
-              <Button color="primary" onClick={this.handleClick} name = "generate">
+              <Button color="primary" onClick={this.handleClick} name = "generate" disabled={this.state.checkQuant}> 
               Generate Bill
               </Button>
               </div>
@@ -171,6 +181,7 @@ class Billing extends React.Component {
         
    </>
   )}
+  
   cList = ()=>{
     var sum = 0;
     this.state.products.forEach(function(item){
@@ -231,6 +242,18 @@ class Billing extends React.Component {
                             <label
                               className="form-control-label"
                             >
+                            <b className="text-white">Coupon code</b>
+                            </label>
+                            <div style={{alignItems:'center',justifyContent:'center'}} class="form-inline">
+                                <input type="text" name="couponcode" class="form-control mr-1" />
+                                <br></br>
+                                       <span class="input-group-btn">
+                                  <button color="primary" onClick={this.applyCoupon} class="btn btn-info">Apply</button>
+                                        </span>
+                                  </div>
+                            <label
+                              className="form-control-label"
+                            >
                             <b className="text-white">Phone Number</b>
                             </label>
                             <Input
@@ -248,7 +271,7 @@ class Billing extends React.Component {
                             <Input
                               className="form-control-alternative text-dark"
                               id="emailId"
-                              type="text"
+                              type="email"
                               name="emailId"
                               autoComplete = "off"
                             />
@@ -258,7 +281,7 @@ class Billing extends React.Component {
                     Confirm Products
               </Button>
 
-              <Button  color="primary" onClick={this.handleClick} name = "back">
+              <Button  color="primary" onClick={this.handleClick} name = "back" >
                     Back
               </Button>
               </div>
@@ -300,7 +323,7 @@ class Billing extends React.Component {
   disp=(pro)=>{ 
   return pro.map((data,key)=>{
     if (!('quantity' in data))
-    data.quantity = 0;
+    data.quantity = null;
     return (
       <tr key={key}>
                       <th scope="row">{data.name}</th>
@@ -311,10 +334,16 @@ class Billing extends React.Component {
                         <input type="number" defaultValue={data.quantity} className="number text-center" min="1" 
                         max = {data.stock}  style = {{width: 50}} onChange = {
                           (e)=>{
+                            
                             if (parseInt(e.target.value) <= data.stock)
-                            data.quantity = parseInt( e.target.value)
+                            {data.quantity = parseInt( e.target.value)
+                              if(data.quantity===0 || data.quantity===null)
+                              this.setState({checkQuant:true})
+                              else
+                                this.setState({checkQuant:false})
+                            }
                             else
-                            e.target.value = 0
+                            e.target.value = null
                           }
                         }></input>
                         <sub></sub>

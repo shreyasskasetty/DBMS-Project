@@ -17,7 +17,8 @@
 */
 import React from "react";
 import {connect} from 'react-redux';
-
+import {Formik} from 'formik'
+import * as Yup from 'yup'
 // reactstrap components
 import {
   Button,
@@ -32,13 +33,14 @@ import {
   InputGroup,
   Col
 } from "reactstrap";
-
 class Login extends React.Component {
 
 constructor(props) {
   super(props);
   this.state ={
-    empid: ""
+    empid: "",
+    empidfield: false,
+    password: false
   }
   this.onChange = this.onChange.bind(this);
 } 
@@ -47,7 +49,7 @@ handleClick(event){
   this.props.updateEmpId()
 }
   onChange(e){
-    this.setState({[e.target.name]:e.target.value})
+    this.setState({empidfield:true,passwordfield:true})
   }
   handleSubmit(event){
     console.log(this.state)
@@ -87,8 +89,47 @@ handleClick(event){
   else alert('Admin Should Logout');
 
     }
+  componentDidMount(){
+    this.setState({empidfield:false, passwordfield:false})
+  }
   render() {
     return (
+      <Formik
+      initialValues={{empid:"",password: ""}}
+        onSubmit={(values, {setSubmitting})=> {
+            setTimeout(()=>{
+                this.handleSubmit(values)
+                setSubmitting(false)
+            },500);
+        }}
+
+
+        validationSchema={Yup.object().shape({
+            empid: Yup
+            .number()
+            .required("No Employee ID provided")
+            .positive()
+            .integer(),
+            password: Yup.string()
+            .required("No password provided.")
+            .min(4,"password is tooo short - should be 4 characters atleast")
+        })}
+      >
+        {
+                props=>{
+                    const{
+                        values,
+                        touched,
+                        errors,
+                        isSubmitting,
+                        handleChange,
+                        handleBlur,
+                        handleSubmit,
+                        isValid
+                    
+                
+            } = props;
+        return(
       <> 
         <Col lg="5" md="7">
           <Card className="bg-secondary shadow border-0">
@@ -109,8 +150,17 @@ handleClick(event){
                         <i className="ni ni-email-83" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input value={this.state.empid} onChange = {this.onChange} placeholder="EmployeeID" name = "empid"type="ID" />
+                    <Input  onChange = {handleChange} placeholder="EmployeeID"
+                    value ={values.empid}
+                    type="number"
+                    onBlur={handleBlur} 
+                    autoComplete="off"
+                    name= "empid"
+                    className={errors.empid && touched.empid && "error"}/>
                   </InputGroup>
+                  {errors.empid && touched.empid && (
+            <div style={{ color: 'red' }}>{errors.empid}</div>
+                )}
                 </FormGroup>
 
                 {/*Password*/}
@@ -121,13 +171,23 @@ handleClick(event){
                         <i className="ni ni-lock-circle-open" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Password" name = "password" type="password" />
+                    <Input placeholder="Password" 
+                    name = "password" 
+                    type="password" 
+                    value={values.password}
+                    onChange={handleChange} 
+                    onBlur={handleBlur}
+                    autoComplete="off"
+                    className={errors.password && touched.password && "error"}/>
                   </InputGroup>
+                  {errors.password && (
+                      <div style={{ color: 'red' }}>{errors.password}</div>
+                  )}
                 </FormGroup>
 
                 {/* Sign in BUTTON */}
                 <div className="text-center">
-                  <Button className="my-4" color="primary" type="submit">
+                  <Button className="my-4" color="primary" type="submit" disabled={!isValid}>
                     Sign in
                   </Button>
                 </div>
@@ -139,6 +199,8 @@ handleClick(event){
          
         </Col>
       </>
+            );    }}
+                </Formik>
     );
   }
 }
