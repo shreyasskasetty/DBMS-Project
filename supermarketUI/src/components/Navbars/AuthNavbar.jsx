@@ -114,6 +114,18 @@ class AdminNavbar extends React.Component {
     </NavLink>
     )
   }
+  password = ()=>{
+    return(
+      <NavLink
+      className="nav-link-icon"
+      to="/auth/password"
+      tag={Link}
+    >
+      <i className="ni ni-basket" />
+      <span className="nav-link-inner--text">Password</span>
+    </NavLink>
+    )
+  }
 
   disp= () =>{
     return (
@@ -160,6 +172,11 @@ class AdminNavbar extends React.Component {
                 <NavItem >
                   {this.props.eLogin?this.inventory():null}
                 </NavItem >
+
+                <NavItem>
+                  {this.props.eLogin?this.password():null}
+                </NavItem>
+
                 <NavItem >
                   {this.props.eLogin?this.register():this.empLogin()}
                 </NavItem >
@@ -167,6 +184,8 @@ class AdminNavbar extends React.Component {
                 <NavItem onClick={this.handleClick}>
                   {this.props.eLogin?this.logout():this.adminLogin()}
                 </NavItem>
+                
+
               </Nav>
             </UncontrolledCollapse>
           </Container>

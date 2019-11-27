@@ -136,7 +136,7 @@ class Billing extends React.Component {
     return (
       <>
         {/*Iot Tag registration form tag*/ }
-        <Col lg="6" md="9">
+        <Col lg="7" md="9">
         <Card className="shadow">
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
@@ -161,6 +161,7 @@ class Billing extends React.Component {
                       <th scope="col">Product</th>
                       <th scope="col">Product ID</th>
                       <th scope="col">Cost</th>
+                      <th scope="col">Section</th>
                       <th scope="col">Quantity</th>
                       <th scope="col" />
                     </tr>
@@ -323,12 +324,13 @@ class Billing extends React.Component {
   disp=(pro)=>{ 
   return pro.map((data,key)=>{
     if (!('quantity' in data))
-    data.quantity = null;
+    data.quantity = 0;
     return (
       <tr key={key}>
                       <th scope="row">{data.name}</th>
                       <td>{data.pid}</td>
                       <td>{data.cost}</td>
+                      <td>{data.section}</td>
                       <td>
                         <div>
                         <input type="number" defaultValue={data.quantity} className="number text-center" min="1" 
@@ -343,7 +345,7 @@ class Billing extends React.Component {
                                 this.setState({checkQuant:false})
                             }
                             else
-                            e.target.value = null
+                            e.target.value = 0
                           }
                         }></input>
                         <sub></sub>

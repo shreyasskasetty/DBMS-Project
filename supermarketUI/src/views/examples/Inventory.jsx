@@ -80,6 +80,7 @@ class Inventory extends React.Component {
                       <th scope="row">{data.name}</th>
                       <td>{data.pid}</td>
                       <td>{data.cost}</td>
+                      <td>{data.section}</td>
                       <td>{data.stock}</td>
                     </tr>
     )
@@ -91,7 +92,7 @@ class Inventory extends React.Component {
     return (
       <>
         {/*Iot Tag registration form tag*/ }
-        <Col lg="6" md="9">
+        <Col lg="6.5" md="9">
         <Card className="shadow">
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
@@ -106,6 +107,7 @@ class Inventory extends React.Component {
                       <th scope="col">Product</th>
                       <th scope="col">Product ID</th>
                       <th scope="col">Cost</th>
+                      <th scope="col">Section</th>
                       <th scope="col">Quantity</th>
                       <th scope="col" />
                     </tr>

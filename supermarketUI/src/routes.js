@@ -28,6 +28,7 @@ import Billing from "./views/examples/Billing";
 import Inventory from "./views/examples/Inventory";
 import Notification from "./views/examples/Notification";
 import Sketch from "./views/examples/Sketch"
+import Password from "./views/examples/Password";
 
 var routes = [
   {
@@ -115,6 +116,14 @@ var routes = [
     name: "Billing",
     icon: "ni ni-basket text-pink",
     component: Billing,
+    layout: "/auth",
+    flag: 0
+  },
+  {
+    path: "/password",
+    name: "Password",
+    icon: "ni ni-basket text-pink",
+    component: Password,
     layout: "/auth",
     flag: 0
   },

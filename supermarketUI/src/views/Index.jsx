@@ -291,6 +291,7 @@ class Index extends React.Component {
       }).catch(function(err) {
       console.log(err)
       });
+      
       fetch("/analysis", {
         method: 'POST',
         headers: {
