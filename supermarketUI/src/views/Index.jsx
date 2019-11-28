@@ -186,7 +186,8 @@ class Index extends React.Component {
           setP(data.rows)
         }
         else if (data.status === "failure")
-        {
+        {          
+          console.log(data.message)
           alert(data.message)
         }
       }).catch(function(err) {
@@ -212,6 +213,7 @@ class Index extends React.Component {
           }
           else if (data.status === "failure")
           {
+            console.log(data.message)
             alert(data.message)
           }
         }).catch(function(err) {
@@ -219,6 +221,43 @@ class Index extends React.Component {
         });
       
       
+  }
+  writeDiscount = (sec,id)=>{
+    fetch("/getSec", {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json'},
+      body: JSON.stringify({section:sec,cid:id})
+      })
+      .then(function(response) {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      })
+      .then(function(data){
+        if (data.status === true)
+        {
+          console.log(data)
+          const db = firebase.firestore();
+          var ref = db.collection('Discount').doc(id);
+          ref.set({
+            pid : []
+          })
+          data.rows.forEach((item) => {
+            ref.update({
+              pid : firebase.firestore.FieldValue.arrayUnion(item)
+            })
+          })
+        }
+        else if (data.status === false)
+        {
+          console.log(data.message)
+          alert(data.message)
+        }
+      }).catch(function(err) {
+      console.log(err)
+      });
   }
 
   mailOffer=(sec,id)=>{
@@ -235,12 +274,13 @@ class Index extends React.Component {
         return response.json();
       })
       .then(function(data){
-        if (data.staus === true)
+        if (data.status === true)
         {
           alert('offer sent')
         }
-        else if (data.staus === false)
+        else if (data.status === false)
         {
+          console.log(data.message)
           alert(data.message)
         }
       }).catch(function(err) {
@@ -280,12 +320,13 @@ class Index extends React.Component {
         return response.json();
       })
       .then(function(data){
-        if (data.staus === true)
+        if (data.status === true)
         {
           setX(data.data)
         }
-        else if (data.staus === false)
+        else if (data.status === false)
         {
+          console.log(data.message)
           alert(data.message)
         }
       }).catch(function(err) {
@@ -305,12 +346,13 @@ class Index extends React.Component {
           return response.json();
         })
         .then(function(data){
-          if (data.staus === true)
+          if (data.status === true)
           {
-            alert(data.loc)
+            alert('Analysis Completed')
           }
-          else if (data.staus === false)
+          else if (data.status === false)
           {
+            console.log(data.message)
             alert(data.message)
           }
         }).catch(function(err) {
@@ -326,15 +368,22 @@ class Index extends React.Component {
       const data = change.doc.data()
       data.id = change.doc.id
       if (change.type === 'added')
-       { console.log(data)
+       { 
         if (data.x < 120 )
+        {
           this.mailOffer('secA',id)
-        if (data.x >= 120 && data.x < 200)
-        this.mailOffer('secB',id)
-        if (data.x >= 200)
-        this.mailOffer('secC',id)
-      db.collection('Results').doc(data.id).delete();
+          this.writeDiscount('secA',id)
+        
+         } if (data.x >= 120 && data.x < 200)
+        {this.mailOffer('secB',id)
+        this.writeDiscount('secB',id)
 
+        }if (data.x >= 200)
+        {this.mailOffer('secC',id)
+        this.writeDiscount('secC',id)
+
+      //db.collection('Results').doc(data.id).delete();
+      }
       }
 
       else if (change.type === 'removed')
